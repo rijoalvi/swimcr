@@ -1,0 +1,78 @@
+<script type='text/html' id='templateEquipos'> <!--esto va dentro del id "tabs-container-->
+         <% for (var i = 0; i < equipos.length; i++) { %>
+            <li <%if(i == 0) {%>class="active"<%}%>>
+                <a href="#tab-<%= equipos[i].id %>" role="tab" data-toggle="tab" data-id-equipo = "<%= equipos[i].id %>"><%= equipos[i].nombre %></a>
+            </li>
+        <% }; %>
+</script>
+
+<script type="text/html" id="templateEntrenamientos"> <!--esto va dentro del id "tabs-content-container"-->
+    <div class = "tab-pane active" id="tab-<%= entrenamientos[i].id_equipo %>">
+        <div class = "entrenamientos">
+            <table class="table">
+                <tr>
+                    <th>
+                        Entrenamientos <button style="color:#078C19; opacity: 2;" type="button" class="close" onclick="deleteRow(this)" data-dismiss="alert" aria-hidden="true">+</button>
+                    </th>
+                </tr>
+                 <% for (var i = 0; i < entrenamientos.length; i++) { %>
+                <tr>
+                    <td data-id-entrenamiento="<%= entrenamientos[i].id %>">
+                        <a href="#"><%= equipos[i].fecha %></a>
+                        <button style="color:#C00; opacity: 2;" type="button" class="close" onclick="deleteRow(this)" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    </td>
+                </tr>
+                <% }; %>
+            </table>
+        </div>
+        <div class = "pruebas">
+            <!--Contenido del template de pruebas-->
+        </div>
+    </div>
+</script>
+
+
+
+<script type='text/html' id='templatePruebas'>
+    <table class="table">
+        <tr>
+            <th>Distancia</th>
+            <th>Estilo</th>
+            <th>Tipo<button style="color:#078C19; opacity: 2;" type="button" class="close" onclick="deleteRow(this)" data-dismiss="alert" aria-hidden="true">+</button></th>
+        </tr>
+        <% for (var i = 0; i < pruebas.length; i++) { %>
+        <tr>
+            <td>
+                 <select class="form-control">
+                <% var distancia = 25;
+                   while(distancia < 1600) {%>
+                     <option value="<%= distancia %>" <% if(pruebas[i].distancia == distancia) { %> selected <% } %> ><%= distancia %></option>
+                <% if (distancia < 200) {
+                        distancia = distancia * 2;
+                    }
+                    else if (distancia < 1000) {
+                        distancia = distancia +100;
+                    }
+                    else {
+                        distancia = distancia + 500;
+                    }
+                %>
+                 </select>
+            </td>
+            <td>
+                <select class="form-control">
+                    <option value="1" <% if(pruebas[i].estilo == 1) { %> selected <% } %> >Libre</option>
+                    <option value="2" <% if(pruebas[i].estilo == 2) { %> selected <% } %> >Dorso</option>
+                    <option value="3" <% if(pruebas[i].estilo == 3) { %> selected <% } %> >Pecho</option>
+                    <option value="4" <% if(pruebas[i].estilo == 4) { %> selected <% } %> >Mariposa</option>
+                </select>
+            </td>
+            <td>
+                <input type="text" class="form-control" placeholder="Tipo de prueba (Ejemplo: Calentamiento)" value = "pruebas[i].tipo">
+            </td>
+            <td>
+                <button style="color:#C00; opacity: 2;" type="button" class="close" onclick="deleteRow(this)" data-dismiss="alert" aria-hidden="true">&times;</button>
+            </td>
+        </tr>
+    </table>
+</script>
