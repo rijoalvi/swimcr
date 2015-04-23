@@ -30,7 +30,6 @@
 	<context:component-scan base-package="com.swimcr" />
 
 	<!-- Hibernate context -->
-
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
@@ -42,19 +41,16 @@
 
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
 		destroy-method="close">
-		
 		<property name="driverClassName" value="${database.driver}" />
         <property name="url" value="${database.url}" />
         <property name="username" value="${database.user}" />
         <property name="password" value="${database.password}" />
 	</bean>
-	
-	
 
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="packagesToScan" value="com.swimcr.models" />
+		<property name="packagesToScan" value="com.swimcr.modelos" />
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
@@ -65,6 +61,7 @@
 	</bean>
 
 	<tx:annotation-driven />
+	
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
@@ -72,5 +69,4 @@
 
 	<bean id="persistenceExceptionTranslationPostProcessor"
 		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
-
 </beans>

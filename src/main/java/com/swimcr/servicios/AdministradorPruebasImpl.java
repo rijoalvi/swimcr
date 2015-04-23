@@ -31,7 +31,7 @@ public class AdministradorPruebasImpl implements AdministradorPruebas{
     EntrenamientoDao entrenamientoDao;
     
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = false)
     public void guardarPrueba(Prueba prueba) {
         pruebaDao.guardarPrueba(prueba);
     }

@@ -7,8 +7,10 @@
 package com.swimcr.dao;
 
 import com.swimcr.modelos.Prueba;
+
 import java.util.List;
 import java.util.logging.Logger;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -33,15 +35,22 @@ public class PruebaDaoImpl implements PruebaDao{
     
     @Override
     public void guardarPrueba(Prueba prueba) {
-       
+    	Session s;
         try {
-            sessionfactory.getCurrentSession();
+        	System.out.println("SE LOGRO!!!");
+            s = sessionfactory.getCurrentSession();
+            System.out.println("SESION: ");
+            System.out.println(s.toString());
         }
         catch(Exception e) {
-            //sessionfactory.openSession();
+        	System.out.println("MAMELUCO");
+            System.out.print(e);
+            s = sessionfactory.openSession();
         }
-        Session s = sessionfactory.openSession();
+        //Session s = sessionfactory.openSession();
+        System.out.println("CASI LISTO");
         s.saveOrUpdate(prueba);
+        System.out.println("LISTO");
         s.close();
     }
     
