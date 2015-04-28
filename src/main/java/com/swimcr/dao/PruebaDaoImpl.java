@@ -51,7 +51,6 @@ public class PruebaDaoImpl implements PruebaDao{
         System.out.println("CASI LISTO");
         s.saveOrUpdate(prueba);
         System.out.println("LISTO");
-        s.close();
     }
     
     @Override
@@ -59,7 +58,6 @@ public class PruebaDaoImpl implements PruebaDao{
         @SuppressWarnings("unchecked")
         Session s = sessionfactory.openSession();
         List<Prueba> lista = s.createCriteria(Prueba.class).list();
-        s.close();
         return lista;
     }
     
