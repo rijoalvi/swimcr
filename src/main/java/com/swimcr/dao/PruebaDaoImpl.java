@@ -37,33 +37,40 @@ public class PruebaDaoImpl implements PruebaDao{
     public void guardarPrueba(Prueba prueba) {
     	Session s;
         try {
-        	System.out.println("SE LOGRO!!!");
             s = sessionfactory.getCurrentSession();
-            System.out.println("SESION: ");
-            System.out.println(s.toString());
         }
         catch(Exception e) {
-        	System.out.println("MAMELUCO");
             System.out.print(e);
             s = sessionfactory.openSession();
         }
-        //Session s = sessionfactory.openSession();
-        System.out.println("CASI LISTO");
         s.saveOrUpdate(prueba);
-        System.out.println("LISTO");
     }
     
     @Override
     public List<Prueba> obtenerPruebas() {
         @SuppressWarnings("unchecked")
-        Session s = sessionfactory.openSession();
+        Session s;
+        try {
+            s = sessionfactory.getCurrentSession();
+        }
+        catch(Exception e) {
+            System.out.print(e);
+            s = sessionfactory.openSession();
+        }
         List<Prueba> lista = s.createCriteria(Prueba.class).list();
         return lista;
     }
     
     @Override
     public List<Prueba> obtenerPruebas(int idEntrenamiento) {
-        Session s = sessionfactory.openSession();
+        Session s;
+        try {
+            s = sessionfactory.getCurrentSession();
+        }
+        catch(Exception e) {
+            System.out.print(e);
+            s = sessionfactory.openSession();
+        }
         Criteria c = s.createCriteria(Prueba.class);
         c.add(Restrictions.eq("id_entrenamiento", idEntrenamiento));
         List<Prueba> resp = c.list();

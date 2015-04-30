@@ -1,10 +1,10 @@
 var data = {
-	id: 17,
+	id: 27,
     id_entrenamiento: 1,
-    distancia: 700,
-    estilo: 3,
-    consecutivo: 6,
-    tipo: 'calentamiento'
+    distancia: 200,
+    estilo: 1,
+    consecutivo: 4,
+    tipo: 'velocidad'
 };
 
 var data2 = {
@@ -12,7 +12,7 @@ var data2 = {
 	    distancia: 400,
 	    estilo: 2,
 	    consecutivo: 6,
-	    tipo: 'calentamiento'
+	    tipo: 'afloje'
 	};
 this.datos = {};
 $(document).ready(function() {
