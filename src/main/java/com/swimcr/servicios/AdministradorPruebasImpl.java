@@ -10,10 +10,13 @@ import com.swimcr.dao.EntrenamientoDao;
 import com.swimcr.dao.PruebaDao;
 import com.swimcr.modelos.Entrenamiento;
 import com.swimcr.modelos.Prueba;
+
 import java.util.Date;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 /**
  *
@@ -21,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @Service("administradorPruebas")
-@Transactional
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 public class AdministradorPruebasImpl implements AdministradorPruebas{
 
     @Autowired
@@ -31,7 +34,7 @@ public class AdministradorPruebasImpl implements AdministradorPruebas{
     EntrenamientoDao entrenamientoDao;
     
     @Override
-    @Transactional(readOnly = false)
+//    @Transactional(readOnly = false)
     public void guardarPrueba(Prueba prueba) {
         pruebaDao.guardarPrueba(prueba);
     }

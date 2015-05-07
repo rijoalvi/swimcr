@@ -10,6 +10,7 @@ import com.swimcr.modelos.Tiempo;
 
 import java.util.List;
 import java.util.logging.Logger;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.annotations.common.util.impl.LoggerFactory;
@@ -32,7 +33,14 @@ public class TiempoDaoImpl implements TiempoDao{
     
     @Override
     public void guardarTiempo(Tiempo tiempo) {
-        Session s = sessionfactory.openSession();
+    	Session s;
+        try {
+            s = sessionfactory.getCurrentSession();
+        }
+        catch(Exception e) {
+            System.out.print(e);
+            s = sessionfactory.openSession();
+        }
         s.saveOrUpdate(tiempo);
         s.close();
     }
@@ -40,7 +48,14 @@ public class TiempoDaoImpl implements TiempoDao{
         @Override
     public List<Tiempo> obtenerTiempos() {
         @SuppressWarnings("unchecked")
-        Session s = sessionfactory.openSession();
+        Session s;
+        try {
+            s = sessionfactory.getCurrentSession();
+        }
+        catch(Exception e) {
+            System.out.print(e);
+            s = sessionfactory.openSession();
+        }
         List<Tiempo> lista = s.createCriteria(Tiempo.class).list();
         s.close();
         return lista;

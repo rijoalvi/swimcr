@@ -8,9 +8,11 @@ package com.swimcr.dao;
 
 import com.swimcr.modelos.Entrenamiento;
 import com.swimcr.modelos.Usuario;
+
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -35,14 +37,14 @@ public class EntrenamientoDaoImpl implements EntrenamientoDao{
     
     @Override
     public void guardarEntrenamiento(Entrenamiento entrenamiento) {
+    	Session s;
         try {
-            sessionfactory.getCurrentSession();
+            s = sessionfactory.getCurrentSession();
         }
         catch(Exception e) {
-            //sessionfactory.openSession();
-            LOGGER.info("abri sesion");
+            System.out.print(e);
+            s = sessionfactory.openSession();
         }
-        Session s = sessionfactory.openSession();
         s.saveOrUpdate(entrenamiento);
         s.close();
     }
@@ -50,7 +52,14 @@ public class EntrenamientoDaoImpl implements EntrenamientoDao{
     @Override
     public List<Entrenamiento> obtenerEntrenamientos() {
         @SuppressWarnings("unchecked")
-        Session s = sessionfactory.openSession();
+        Session s;
+        try {
+            s = sessionfactory.getCurrentSession();
+        }
+        catch(Exception e) {
+            System.out.print(e);
+            s = sessionfactory.openSession();
+        }
         List<Entrenamiento> listaEntrenamientos = s.createCriteria(Entrenamiento.class).list();
         s.close();
         return listaEntrenamientos;
@@ -59,8 +68,16 @@ public class EntrenamientoDaoImpl implements EntrenamientoDao{
     @Override
     public List<Entrenamiento> obtenerEntrenamientos(int idEquipo) {
         List<Entrenamiento> resp;
-        Criteria c = sessionfactory.openSession().createCriteria(Entrenamiento.class);
-	c.add(Restrictions.eq("id_equipo",idEquipo));
+        Session s;
+        try {
+            s = sessionfactory.getCurrentSession();
+        }
+        catch(Exception e) {
+            System.out.print(e);
+            s = sessionfactory.openSession();
+        }
+        Criteria c = s.createCriteria(Entrenamiento.class);
+        c.add(Restrictions.eq("id_equipo",idEquipo));
         resp = c.list();
         return resp;
     }
@@ -68,8 +85,16 @@ public class EntrenamientoDaoImpl implements EntrenamientoDao{
     @Override
     public Entrenamiento obtenerEntrenamientoFecha(int idEquipo, Date fecha) {
         Entrenamiento resp;
-        Criteria c = sessionfactory.openSession().createCriteria(Entrenamiento.class);
-	c.add(Restrictions.eq("id_equipo", idEquipo));
+        Session s;
+        try {
+            s = sessionfactory.getCurrentSession();
+        }
+        catch(Exception e) {
+            System.out.print(e);
+            s = sessionfactory.openSession();
+        }
+        Criteria c = s.createCriteria(Entrenamiento.class);
+        c.add(Restrictions.eq("id_equipo", idEquipo));
         c.add(Restrictions.eq("fecha", fecha));
         resp = (Entrenamiento)c.uniqueResult();
         return resp;

@@ -6,8 +6,10 @@
 
 package com.swimcr.dao;
 import com.swimcr.modelos.Equipo;
+
 import java.util.List;
 import java.util.logging.Logger;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -31,13 +33,28 @@ public class EquipoDaoImpl implements EquipoDao{
     @Override
     public List<Equipo> obtenerEquipos() {
         @SuppressWarnings("unchecked")
-        List<Equipo> listaEquipos = sessionfactory.openSession().createCriteria(Equipo.class).list();
+        Session s;
+        try {
+            s = sessionfactory.getCurrentSession();
+        }
+        catch(Exception e) {
+            System.out.print(e);
+            s = sessionfactory.openSession();
+        }
+        List<Equipo> listaEquipos = s.createCriteria(Equipo.class).list();
         return listaEquipos;
     }
 
     @Override
     public void guardarEquipo(Equipo equipo) {
-        Session s = sessionfactory.openSession();
+    	Session s;
+        try {
+            s = sessionfactory.getCurrentSession();
+        }
+        catch(Exception e) {
+            System.out.print(e);
+            s = sessionfactory.openSession();
+        }
         s.saveOrUpdate(equipo);
         s.close();
     }
@@ -45,9 +62,16 @@ public class EquipoDaoImpl implements EquipoDao{
     @Override
     public List<Equipo> obtenerEquipos(int idUsuario) {
         List<Equipo> resp;
-        Session s = sessionfactory.openSession();
+        Session s;
+        try {
+            s = sessionfactory.getCurrentSession();
+        }
+        catch(Exception e) {
+            System.out.print(e);
+            s = sessionfactory.openSession();
+        }
         Criteria c = s.createCriteria(Equipo.class);
-	c.add(Restrictions.eq("id_usuario",idUsuario));
+        c.add(Restrictions.eq("id_usuario",idUsuario));
         resp = c.list();
         System.out.println(resp.toArray().length);
         s.close();

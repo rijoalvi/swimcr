@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 /**
  *
- * @author Joseiby Hernandez
+ * @author Ricardo Alvarado
  */
 public interface AdministradorPruebas{
     public void guardarPrueba(Prueba entrenamiento);

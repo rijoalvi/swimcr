@@ -1,9 +1,9 @@
 var data = {
 	id: 27,
     id_entrenamiento: 1,
-    distancia: 200,
-    estilo: 1,
-    consecutivo: 4,
+    distancia: 400,
+    estilo: 2,
+    consecutivo: 3,
     tipo: 'velocidad'
 };
 
