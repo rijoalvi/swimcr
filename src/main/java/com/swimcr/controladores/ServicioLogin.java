@@ -29,7 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author r.alvarado
  */
 @Controller
-@RequestMapping("/login")
+@RequestMapping("/loginsss")
 public class ServicioLogin {
     
     @Autowired
