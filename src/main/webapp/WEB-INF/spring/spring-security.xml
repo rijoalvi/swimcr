@@ -12,9 +12,12 @@
 		    login-page="/login" 
 		    default-target-url="/welcome" 
 			authentication-failure-url="/login?error" 
+			login-processing-url="/j_spring_security_check"
 			username-parameter="username"
 			password-parameter="password" />
-		<logout logout-success-url="/login?logout"  />
+		<logout 
+			logout-url="/j_spring_security_logout"
+			logout-success-url="/login?logout"  />
 		<!-- enable csrf protection -->
 		<csrf/>
 	</http>
