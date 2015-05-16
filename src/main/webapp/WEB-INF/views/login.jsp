@@ -1,78 +1,52 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page session="true"%>
-<html>
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
 <head>
-<title>Login Page</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title></title>
+<meta name="Asistente de Nataci&oacute;n" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="/recursos/interfaz/css/bootstrap.min.css">
 <style>
-.error {
-	padding: 15px;
-	margin-bottom: 20px;
-	border: 1px solid transparent;
-	border-radius: 4px;
-	color: #a94442;
-	background-color: #f2dede;
-	border-color: #ebccd1;
-}
-
-.msg {
-	padding: 15px;
-	margin-bottom: 20px;
-	border: 1px solid transparent;
-	border-radius: 4px;
-	color: #31708f;
-	background-color: #d9edf7;
-	border-color: #bce8f1;
-}
-
-#login-box {
-	width: 300px;
-	padding: 20px;
-	margin: 100px auto;
-	background: #fff;
-	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-	border: 1px solid #000;
+body {
+	padding-top: 50px;
+	padding-bottom: 20px;
 }
 </style>
+<link rel="stylesheet" href="/recursos/interfaz/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="/recursos/interfaz/css/main.css">
+<script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 </head>
 <body onload='document.loginForm.username.focus();'>
+	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Asistente de Nataci&oacute;n</a>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-2 col-md-offset-5" id="login-container">
+		<h1>Bienvenido!</h1>
 
-	<h1>Spring Security Custom Login Form (XML)</h1>
-
-	<div id="login-box">
-
-		<h3>Login with Username and Password</h3>
-
-		<c:if test="${not empty error}">
-			<div class="error">${error}</div>
-		</c:if>
-		<c:if test="${not empty msg}">
-			<div class="msg">${msg}</div>
-		</c:if>
-
-		<form name='loginForm'
+		<form class="form-group" name='loginForm'
 			action="<c:url value='/j_spring_security_check' />" method='POST'>
-
-			<table>
-				<tr>
-					<td>User:</td>
-					<td><input type='text' name='username'></td>
-				</tr>
-				<tr>
-					<td>Password:</td>
-					<td><input type='password' name='password' /></td>
-				</tr>
-				<tr>
-					<td colspan='2'><input name="submit" type="submit"
-						value="submit" /></td>
-				</tr>
-			</table>
-
-			<input type="hidden" name="${_csrf.parameterName}"
-				value="${_csrf.token}" />
-
+			<input type="text" name='username' placeholder="Nombre de Usuario"
+				class="form-control usuario" value="rijoalvi"> <input
+				type="password" name='password' placeholder="Contraseña"
+				class="form-control contrasena" value="88"> <input
+				class="btn btn-success" id="boton-login" name="submit" type="submit"
+				value="Ingresar" /> <input type="hidden"
+				name="${_csrf.parameterName}" value="${_csrf.token}" />
 		</form>
 	</div>
-
 </body>
 </html>
