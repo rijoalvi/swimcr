@@ -33,6 +33,30 @@ public class UsuarioDaoImpl implements UsuarioDao {
     @Autowired
     private SessionFactory sessionfactory;
 
+    
+    @SuppressWarnings("unchecked")
+	public Usuario obtenerPorNombreUsuario(String nombreUsuario) { 
+		Session s;
+        try {
+            s = sessionfactory.getCurrentSession();
+        }
+        catch(Exception e) {
+            System.out.print(e);
+            s = sessionfactory.openSession();
+        }
+        Criteria c = s.createCriteria(Usuario.class);
+		c.add(Restrictions.eq("nombre_usuario", nombreUsuario));
+		
+		List<Usuario> listaUsuarios = c.list();
+ 
+		if (listaUsuarios.size() > 0) {
+			return listaUsuarios.get(0);
+		} else {
+			return null;
+		}
+ 
+	}
+    
     @Override
     public void guardarUsuario(Usuario usuario) {
     	Session s;

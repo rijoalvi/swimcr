@@ -3,10 +3,13 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/security
-	http://www.springframework.org/schema/security/spring-security.xsd">
+	http://www.springframework.org/schema/security/spring-security.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<http auto-config="true">
 		<intercept-url pattern="/admin**" access="hasRole('USER')"/>
+		<intercept-url pattern="/gestion/**" access="hasRole('USER')"/>
 		
 		<form-login 
 		    login-page="/login" 
@@ -21,12 +24,10 @@
 		<!-- enable csrf protection -->
 		<csrf/>
 	</http>
-
+	
 	<authentication-manager>
-		<authentication-provider>
-			<user-service>
-				<user name="mkyong" password="123456" authorities="ROLE_USER" />
-			</user-service>
+		<authentication-provider user-service-ref="userService" >
+			<password-encoder hash="bcrypt" />    
 		</authentication-provider>
 	</authentication-manager>
 

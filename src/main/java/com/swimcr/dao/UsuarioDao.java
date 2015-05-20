@@ -18,5 +18,6 @@ public interface UsuarioDao {
     public void guardarUsuario(Usuario usuario);
     public List<Usuario> obtenerUsuarios();
     public Usuario obtenerUsuarioLogin(String usuario, String contrasena);
+    public Usuario obtenerPorNombreUsuario(String nombreUsuario);
     
 }

@@ -6,10 +6,13 @@
 
 package com.swimcr.modelos;
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -18,119 +21,147 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name = "usuario")
+@Table(name = "usuario", catalog="asistente_natacion_cr")
 public class Usuario {
     
-    @Id
-    @GeneratedValue
-    @Column(name = "id")
-    private int id;
     
-    @Column(name = "nombre_usuario")
     private String nombre_usuario;
-    
-    @Column(name = "contrasena")
     private String contrasena;
-    
-    @Column(name = "nombre")
     private String nombre;
-    
-    @Column(name = "apellidos")
     private String apellidos;
-    
-    @Column(name = "email")
     private String email;
-    
-    @Column(name = "tipo")
     private int tipo;
-    
-    @Column(name = "edad")
     private int edad;
-    
-    @Column(name = "categoria")
     private int categoria;
-    
-    @Column(name = "especialidad")
     private int especialidad;
+    private boolean activo;
+	private Set<Rol> rol = new HashSet<Rol>(0);
+	
+	public Usuario() {
+	}
+ 
+	public Usuario(String nombre_usuario, String contrasena, boolean activo) {
+		this.nombre_usuario = nombre_usuario;
+		this.contrasena = contrasena;
+		this.activo = activo;
+	}
+ 
+	public Usuario(String nombre_usuario, String contrasena, 
+		boolean activo, Set<Rol> rol) {
+		this.nombre_usuario = nombre_usuario;
+		this.contrasena = contrasena;
+		this.activo = activo;
+		this.rol = rol;
+	}
 
-    public int getId() {
-        return id;
-    }
+	@Id
+    @Column(name = "nombre_usuario", unique = true, nullable = false, length = 45)
+	public String getNombre_usuario() {
+		return nombre_usuario;
+	}
 
-    public String getNombre_usuario() {
-        return nombre_usuario;
-    }
+	@Column(name = "nombre_usuario", unique = true, nullable = false, length = 45)
+	public void setNombre_usuario(String nombre_usuario) {
+		this.nombre_usuario = nombre_usuario;
+	}
 
-    public String getContrasena() {
-        return contrasena;
-    }
+	@Column(name = "contrasena", nullable = false, length = 60)
+	public String getContrasena() {
+		return contrasena;
+	}
 
-    public String getNombre() {
-        return nombre;
-    }
+	@Column(name = "contrasena", nullable = false, length = 60)
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
+	}
 
-    public String getApellidos() {
-        return apellidos;
-    }
+	@Column(name = "nombre")
+	public String getNombre() {
+		return nombre;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	@Column(name = "nombre")
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
-    public int getTipo() {
-        return tipo;
-    }
+	@Column(name = "apellidos")
+	public String getApellidos() {
+		return apellidos;
+	}
 
-    public int getEdad() {
-        return edad;
-    }
+	@Column(name = "apellidos")
+	public void setApellidos(String apellidos) {
+		this.apellidos = apellidos;
+	}
 
-    public int getCategoria() {
-        return categoria;
-    }
+	@Column(name = "email")
+	public String getEmail() {
+		return email;
+	}
 
-    public int getEspecialidad() {
-        return especialidad;
-    }
+	@Column(name = "email")
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	@Column(name = "tipo")
+	public int getTipo() {
+		return tipo;
+	}
 
-    public void setNombre_usuario(String nombre_usuario) {
-        this.nombre_usuario = nombre_usuario;
-    }
+	@Column(name = "tipo")
+	public void setTipo(int tipo) {
+		this.tipo = tipo;
+	}
 
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
-    }
+	@Column(name = "edad")
+	public int getEdad() {
+		return edad;
+	}
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+	@Column(name = "edad")
+	public void setEdad(int edad) {
+		this.edad = edad;
+	}
 
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
-    }
+	@Column(name = "categoria")
+	public int getCategoria() {
+		return categoria;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	@Column(name = "categoria")
+	public void setCategoria(int categoria) {
+		this.categoria = categoria;
+	}
 
-    public void setTipo(int tipo) {
-        this.tipo = tipo;
-    }
+	@Column(name = "especialidad")
+	public int getEspecialidad() {
+		return especialidad;
+	}
 
-    public void setEdad(int edad) {
-        this.edad = edad;
-    }
+	@Column(name = "especialidad")
+	public void setEspecialidad(int especialidad) {
+		this.especialidad = especialidad;
+	}
+	
+	@Column(name = "activo", columnDefinition = "TINYINT", nullable = false)
+	public boolean isActivo() {
+		return activo;
+	}
 
-    public void setCategoria(int categoria) {
-        this.categoria = categoria;
-    }
+	@Column(name = "activo", columnDefinition = "TINYINT", nullable = false)
+	public void setActivo(boolean activo) {
+		this.activo = activo;
+	}
 
-    public void setEspecialidad(int especialidad) {
-        this.especialidad = especialidad;
-    }
-    
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
+	public Set<Rol> getRol() {
+		return rol;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
+	public void setRol(Set<Rol> rol) {
+		this.rol = rol;
+	}
 }

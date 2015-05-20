@@ -21,70 +21,74 @@ import javax.persistence.Table;
 @Table(name = "prueba")
 public class Prueba {
     
+    
+    private int id;
+    private int id_entrenamiento;
+    private int distancia;
+    private int estilo;
+    private int consecutivo;
+    private String tipo;
+
     @Id
     @GeneratedValue
     @Column(name = "id")
-    private int id;
-    
-    @Column(name = "id_entrenamiento")
-    private int id_entrenamiento;
-    
-    @Column(name = "distancia")
-    private int distancia;
-    
-    @Column(name = "estilo")
-    private int estilo;
-    
-    @Column(name = "consecutivo")
-    private int consecutivo;
-    
-    @Column(name = "tipo")
-    private String tipo;
-
     public int getId() {
         return id;
     }
 
+    @Column(name = "id_entrenamiento")
     public int getId_entrenamiento() {
         return id_entrenamiento;
     }
 
+    @Column(name = "distancia")
     public int getDistancia() {
         return distancia;
     }
 
+    @Column(name = "estilo")
     public int getEstilo() {
         return estilo;
     }
 
+    @Column(name = "consecutivo")
     public int getConsecutivo() {
         return consecutivo;
     }
 
+    @Column(name = "tipo")
     public String getTipo() {
         return tipo;
     }
 
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
     public void setId(int id) {
         this.id = id;
     }
 
+    @Column(name = "id_entrenamiento")
     public void setId_entrenamiento(int id_entrenamiento) {
         this.id_entrenamiento = id_entrenamiento;
     }
 
+    @Column(name = "distancia")
     public void setDistancia(int distancia) {
         this.distancia = distancia;
     }
 
+    @Column(name = "estilo")
     public void setEstilo(int estilo) {
         this.estilo = estilo;
     }
 
+    @Column(name = "consecutivo")
     public void setConsecutivo(int consecutivo) {
         this.consecutivo = consecutivo;
     }
 
+    @Column(name = "tipo")
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
