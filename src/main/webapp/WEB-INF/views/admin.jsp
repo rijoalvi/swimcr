@@ -21,6 +21,13 @@
             padding-top: 50px;
             padding-bottom: 20px;
         }
+        .navbar-center{
+		    position: absolute;
+		    width: 100%;
+		    left: 0;
+		    text-align: center;
+		    margin: auto;
+		}
     </style>
     <link rel="stylesheet" href="/recursos/interfaz/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/recursos/interfaz/css/main.css">
@@ -29,34 +36,49 @@
 </head>
 
 <body>
+	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Asistente de Nataci&oacute;n</a>
+				<c:if test="${pageContext.request.userPrincipal.name != null}">
+					<a class="navbar-center" href="#">${pageContext.request.userPrincipal.name}</a>
+				</c:if>
+			</div>
+			<div class="navbar-collapse collapse">
+				<c:url value="/j_spring_security_logout" var="logoutUrl" />
+                <form class="navbar-form navbar-right" action="${logoutUrl}" method="post" role="form">
+                	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                	<button type="submit" class="btn btn-success">Cerrar Sesi&oacute;n</button>
+                </form>
+            </div>
+		</div>
+	</div>
 	<h1>Title : ${title}</h1>
 	<h1>Message : ${message}</h1>
+	
+	<!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron" id="contenedor-aplicacion">
+        <div class="container">
+            <ul class="nav nav-tabs" role="tablist" id="tabs-container">
+                <!--Contenido del template de equipos-->
+            </ul>
 
-	<c:url value="/j_spring_security_logout" var="logoutUrl" />
-	<form action="${logoutUrl}" method="post" id="logoutForm">
-		<input type="hidden" name="${_csrf.parameterName}"
-			value="${_csrf.token}" />
-	</form>
-	<script>
-		function formSubmit() {
-			document.getElementById("logoutForm").submit();
-		}
-	</script>
+            <!-- Tab panes -->
+            <div class="tab-content" id="tabs-content-container">
+                <!--Contenido del template de entrenamientos-->
+            </div>
 
-	<c:if test="${pageContext.request.userPrincipal.name != null}">
-		<h2>
-			Welcome : ${pageContext.request.userPrincipal.name} | <a
-				href="javascript:formSubmit()"> Logout</a>
-		</h2>
-	</c:if>
-	
-	
-	
+
+            <p><a class="btn btn-primary btn-lg hidden" id="boton-volver-entrenamientos" role="button">&laquo; Volver a la lista de entrenamientos</a>
+            </p>
+        </div>
+    </div>
+
 	
 	<div class="container">
         <hr>
         <footer>
-            <p>&copy; Ricardo Alvarado &amp; Joseiby Hern&aacute;ndez 2014</p>
+            <p>&copy; Ricardo Alvarado 2015</p>
         </footer>
     </div>
     <div class="hidden">
@@ -96,6 +118,90 @@
             </tr>
         </table>
     </div>
+    <script type='text/javascript'>
+    	var csrfToken = '${_csrf.token}';
+    </script>
+    <script type='text/html' id='templateEquipos'> <!-- esto va dentro del id "tabs-container"-->
+         <@ for (var i = 0; i < equipos.length; i++) { @>
+            <li <@if(i == 0) {@>class="active"<@}@>>
+                <a href="#<@= equipos[i].id @>" role="tab" data-toggle="tab" data-id-equipo = "<@= equipos[i].id @>"><@= equipos[i].nombre @></a>
+            </li>
+        <@ }; @>
+    </script>
+
+    <script type="text/html" id="templateEntrenamientos"> <!--esto va dentro del id "tabs-content-container"-->
+        <div class = "tab-pane active" id="tab-<@= entrenamientos.equipoId @>">
+            <div class = "entrenamientos">
+                <table class="table">
+                    <tr>
+                        <th>
+                            Entrenamientos <button style="color:#078C19; opacity: 2;" type="button" class="close boton-agregar-entrenamiento">+</button>
+                        </th>
+                    </tr>
+                     <@ for (var i = 0; i < entrenamientos.length; i++) { @>
+                    <tr>
+                        <td class="fechaEntrenamiento" data-id-entrenamiento="<@= entrenamientos[i].id @>">
+                            <a href="#"><@= entrenamientos[i].fecha @></a>
+                            <button style="color:#C00; opacity: 2;" type="button" class="close boton-borrar-entrenamiento">&times;</button>
+                        </td>
+                    </tr>
+                    <@ }; @>
+                </table>
+            </div>
+            <div class = "pruebas">
+                <!--Contenido del template de pruebas-->
+            </div>
+        </div>
+    </script>
+
+
+
+    <script type='text/html' id='templatePruebas'>
+        <table class="table">
+            <tr>
+                <th>Distancia</th>
+                <th>Estilo</th>
+                <th>Tipo</th>
+                <th><button style="color:#078C19; opacity: 2;" type="button" class="close boton-agregar-prueba">+</button></th>
+            </tr>
+            <@ for (var i = 0; i < pruebas.length; i++) { @>
+            <tr>
+                <td>
+                     <select class="form-control distancia">
+                    <@ var distancia = 25;
+                       while ( distancia < 1600 ) {@>
+                         <option value="<@= distancia @>" <@ if(pruebas[i].distancia == distancia) { @> selected <@ } @> ><@= distancia @></option>
+                        <@ if (distancia < 200) {
+                                distancia = distancia * 2;
+                            }
+                            else if (distancia < 1000) {
+                                distancia = distancia +100;
+                            }
+                            else {
+                                distancia = distancia + 500;
+                            }
+                        }
+                    @>
+                     </select>
+                </td>
+                <td>
+                    <select class="form-control estilo">
+                        <option value="1" <@ if(pruebas[i].estilo == 1) { @> selected <@ } @> >Libre</option>
+                        <option value="2" <@ if(pruebas[i].estilo == 2) { @> selected <@ } @> >Dorso</option>
+                        <option value="3" <@ if(pruebas[i].estilo == 3) { @> selected <@ } @> >Pecho</option>
+                        <option value="4" <@ if(pruebas[i].estilo == 4) { @> selected <@ } @> >Mariposa</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" class="form-control tipoPrueba" placeholder="Tipo de prueba (Ejemplo: Calentamiento)" value = "<@= pruebas[i].tipo @>">
+                </td>
+                <td>
+                    <button style="color:#C00; opacity: 2;" type="button" class="close boton-borrar-prueba">&times;</button>
+                </td>
+            </tr>
+            <@ } @>
+        </table>
+    </script>
     
     <!-- /container -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
