@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost:3306
--- Generation Time: May 20, 2015 at 04:28 PM
+-- Generation Time: May 28, 2015 at 04:36 PM
 -- Server version: 5.5.38
 -- PHP Version: 5.6.2
 
@@ -29,11 +29,11 @@ USE `asistente_natacion_cr`;
 --
 
 DROP TABLE IF EXISTS `entrenamiento`;
-CREATE TABLE IF NOT EXISTS `entrenamiento` (
+CREATE TABLE `entrenamiento` (
 `id` int(11) NOT NULL,
   `id_equipo` int(11) NOT NULL,
   `fecha` date NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -42,11 +42,19 @@ CREATE TABLE IF NOT EXISTS `entrenamiento` (
 --
 
 DROP TABLE IF EXISTS `equipo`;
-CREATE TABLE IF NOT EXISTS `equipo` (
+CREATE TABLE `equipo` (
 `id` int(11) NOT NULL,
   `nombre` varchar(45) NOT NULL,
-  `id_usuario` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+  `id_usuario` varchar(45) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `equipo`
+--
+
+INSERT INTO `equipo` (`id`, `nombre`, `id_usuario`) VALUES
+(1, 'Heredia', 'mkyong'),
+(2, 'Chepe', 'mkyong');
 
 -- --------------------------------------------------------
 
@@ -55,14 +63,14 @@ CREATE TABLE IF NOT EXISTS `equipo` (
 --
 
 DROP TABLE IF EXISTS `prueba`;
-CREATE TABLE IF NOT EXISTS `prueba` (
+CREATE TABLE `prueba` (
 `id` int(11) NOT NULL,
   `id_entrenamiento` int(11) NOT NULL,
   `distancia` int(11) NOT NULL,
   `estilo` int(11) NOT NULL,
   `consecutivo` int(11) NOT NULL,
   `tipo` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -71,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `prueba` (
 --
 
 DROP TABLE IF EXISTS `rol`;
-CREATE TABLE IF NOT EXISTS `rol` (
+CREATE TABLE `rol` (
 `id_rol_usuario` int(11) NOT NULL,
   `nombre_usuario` varchar(45) NOT NULL,
   `rol` varchar(45) NOT NULL
@@ -93,14 +101,14 @@ INSERT INTO `rol` (`id_rol_usuario`, `nombre_usuario`, `rol`) VALUES
 --
 
 DROP TABLE IF EXISTS `tiempo`;
-CREATE TABLE IF NOT EXISTS `tiempo` (
+CREATE TABLE `tiempo` (
 `id` int(11) NOT NULL,
   `id_prueba` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
   `tiempo` datetime NOT NULL,
   `distancia_prueba` int(11) DEFAULT NULL,
   `estilo_prueba` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -109,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `tiempo` (
 --
 
 DROP TABLE IF EXISTS `usuario`;
-CREATE TABLE IF NOT EXISTS `usuario` (
+CREATE TABLE `usuario` (
   `nombre_usuario` varchar(45) NOT NULL,
   `contrasena` varchar(150) NOT NULL,
   `activo` tinyint(4) NOT NULL DEFAULT '1',
@@ -179,17 +187,17 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT for table `entrenamiento`
 --
 ALTER TABLE `entrenamiento`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `equipo`
 --
 ALTER TABLE `equipo`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `prueba`
 --
 ALTER TABLE `prueba`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `rol`
 --
@@ -199,7 +207,7 @@ MODIFY `id_rol_usuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT for table `tiempo`
 --
 ALTER TABLE `tiempo`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- Constraints for dumped tables
 --
