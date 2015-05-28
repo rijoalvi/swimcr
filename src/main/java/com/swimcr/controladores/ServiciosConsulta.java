@@ -125,13 +125,13 @@ public class ServiciosConsulta {
         headers.add("Access-Control-Allow-Origin", "*");
         MultiValueMap<String, String> result = new LinkedMultiValueMap<String, String>();
         ObjectMapper mapper = new ObjectMapper();
-        List<Equipo> resp = administradorEquipos.obtenerEquipos(datos.getId_usuario());
+   //     List<Equipo> resp = administradorEquipos.obtenerEquipos(datos.getId_usuario());
         String lista ="";
-        try {
-            lista = mapper.writeValueAsString(resp);
-        } catch (IOException ex) {
+ //       try {
+//            lista = mapper.writeValueAsString(resp);
+ //       } catch (IOException ex) {
             
-        }
+   //     }
         return new ResponseEntity<String>(lista, headers, HttpStatus.OK);
     }
 

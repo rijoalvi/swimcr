@@ -24,7 +24,7 @@ public class Equipo {
     
     private int id;
     private String nombre;
-    private int id_usuario;
+    private String id_usuario;
 
     @Id
     @GeneratedValue
@@ -51,12 +51,12 @@ public class Equipo {
     }
 
     @Column(name = "id_usuario")
-    public int getId_usuario() {
+    public String getId_usuario() {
         return id_usuario;
     }
 
     @Column(name = "id_usuario")
-    public void setId_usuario(int id_usuario) {
+    public void setId_usuario(String id_usuario) {
         this.id_usuario = id_usuario;
     }
     

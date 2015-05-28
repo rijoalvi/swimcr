@@ -61,6 +61,16 @@
         <div class="container">
             <ul class="nav nav-tabs" role="tablist" id="tabs-container">
                 <!--Contenido del template de equipos-->
+                <c:forEach var="equipo" items="${equipos}" varStatus="contador" >
+	                <c:if test="${contador.count == 0}">
+	                	<li class="active">
+	                </c:if>
+	                <c:if test="${contador.count > 0}">
+	                	<li>
+	                </c:if>
+	                	<a href="#${equipo.id}" role="tab" data-toggle="tab" data-id-equipo = "${equipo.id}">${equipo.nombre}</a>
+	            	</li>
+	            </c:forEach>
             </ul>
 
             <!-- Tab panes -->

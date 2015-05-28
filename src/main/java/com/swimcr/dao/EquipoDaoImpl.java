@@ -60,7 +60,7 @@ public class EquipoDaoImpl implements EquipoDao{
     }
     
     @Override
-    public List<Equipo> obtenerEquipos(int idUsuario) {
+    public List<Equipo> obtenerEquipos(String idUsuario) {
         List<Equipo> resp;
         Session s;
         try {

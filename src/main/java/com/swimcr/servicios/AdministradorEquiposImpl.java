@@ -36,7 +36,7 @@ public class AdministradorEquiposImpl implements AdministradorEquipos{
     }
     
     @Override
-    public List<Equipo> obtenerEquipos(int idUsuario) {
+    public List<Equipo> obtenerEquipos(String idUsuario) {
         return equipoDao.obtenerEquipos(idUsuario);
     }
 }

@@ -1,10 +1,20 @@
 package com.swimcr.controladores;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.swimcr.modelos.Entrenamiento;
+import com.swimcr.modelos.Equipo;
+import com.swimcr.servicios.AdministradorEquipos;
 /*package com.swimcr.app;
 
 import java.text.DateFormat;
@@ -45,6 +55,10 @@ public class HomeController {
 		return "home";
 	}
 	*/
+	
+	@Autowired
+    private AdministradorEquipos administradorEquipos;
+	
 	@RequestMapping(value = { "/welcome**" }, method = RequestMethod.GET)
 	public ModelAndView welcomePage() {
 
@@ -57,9 +71,17 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = {"/", "/admin**"}, method = RequestMethod.GET)
-	public ModelAndView adminPage() {
+	public ModelAndView adminPage(final HttpServletRequest request) {
 
 		ModelAndView model = new ModelAndView();
+		List<Equipo> equipos;
+		try{
+			equipos = administradorEquipos.obtenerEquipos(request.getUserPrincipal().getName());
+			System.out.println("SIP");
+		} catch (Error e){
+			equipos = new ArrayList<Equipo>();
+		}
+		model.addObject("equipos", equipos);
 		model.addObject("title", "Spring Security Custom Login Form");
 		model.addObject("message", "This is protected page!");
 		model.setViewName("admin");

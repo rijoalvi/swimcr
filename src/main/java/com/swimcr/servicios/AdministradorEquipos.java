@@ -15,6 +15,6 @@ import java.util.List;
 public interface AdministradorEquipos{
     public void guardarEquipo(Equipo equipo);
     public List<Equipo> obtenerEquipos();
-    public List<Equipo> obtenerEquipos(int idUsuario);
+    public List<Equipo> obtenerEquipos(String idUsuario);
 
 }
