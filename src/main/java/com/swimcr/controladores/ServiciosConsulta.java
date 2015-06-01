@@ -18,9 +18,13 @@ import com.swimcr.modelosTransaccionales.DatosConsultaEquipo;
 import com.swimcr.modelosTransaccionales.DatosConsultaPruebas;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -75,15 +80,27 @@ public class ServiciosConsulta {
         headers.add("Access-Control-Allow-Origin", "*");
         MultiValueMap<String, String> result = new LinkedMultiValueMap<String, String>();
         ObjectMapper mapper = new ObjectMapper();
-        Date fechaMasUno = new Date(datos.getFecha().getTime() +(1000 * 60 * 60 * 24));
-        List<Prueba> resp = administradorPruebas.obtenerPruebas(datos.getId_equipo(), fechaMasUno);
-        String lista ="";
-        try {
-            lista = mapper.writeValueAsString(resp);
-        } catch (IOException ex) {
-            
-        }
-        return new ResponseEntity<String>(lista, headers, HttpStatus.OK);
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+        Date fecha = null;
+		try {
+			fecha = format.parse(datos.getFecha());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        //Date fechaMasUno = new Date(datos.getFecha().getTime() +(1000 * 60 * 60 * 24));
+		if(fecha != null) {
+			List<Prueba> resp = administradorPruebas.obtenerPruebas(datos.getId_equipo(), fecha);
+	        String lista ="";
+	        try {
+	            lista = mapper.writeValueAsString(resp);
+	            return new ResponseEntity<String>(lista, headers, HttpStatus.OK);
+	        } catch (IOException ex) {
+	        	return new ResponseEntity<String>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
+	        }
+		} else {
+			return new ResponseEntity<String>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
     }
 
     @RequestMapping(value = "/entrenamiento/fecha",

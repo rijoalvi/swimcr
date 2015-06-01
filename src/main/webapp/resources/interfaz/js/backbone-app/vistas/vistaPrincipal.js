@@ -11,11 +11,8 @@ Backbone.ajax = function () {
 window.Asistente = window.Asistente || {};
 window.Asistente.vistaPrincipal = Backbone.View.extend({
     el: "#contenedor-aplicacion",
-    templatePruebas: _.template($("#templatePruebas").html()),
-    templateEquipos: _.template($("#templateEquipos").html()),
-    templateEntrenamientos: _.template($("#templateEntrenamientos").html()),
     events: {
-        "click .nav-tabs a": "cargarEntrenamientos",
+        "click .nav-tabs a": "mostrarEntrenamientos",
         "click .entrenamientos a": "cargarPruebas",
         "click #boton-volver-entrenamientos": "mostrarEntrenamientos",
         "click .entrenamientos .boton-borrar-entrenamiento": "borrarFilaEntrenamientos",
@@ -25,8 +22,15 @@ window.Asistente.vistaPrincipal = Backbone.View.extend({
         "click .entrenamientos .boton-guardar-entrenamiento": "guardarFilaEntrenamientos",
         "click .pruebas .boton-guardar-prueba": "guardarFilaPruebas"
     },
+    initialize: function () {
+    	this.templatePruebas = _.template($("#templatePruebas").html());
+        this.templateEquipos = _.template($("#templateEquipos").html());
+        this.templateEntrenamientos = _.template($("#templateEntrenamientos").html());
+    },
+    
     render: function () {
-        this.cargarTabs();
+//        this.cargarTabs();
+    	this.pruebas = new Asistente.pruebas();
         return this;
     },
     guardarFilaEntrenamientos: function (e) {
@@ -72,50 +76,22 @@ window.Asistente.vistaPrincipal = Backbone.View.extend({
             $('.active .entrenamientos').fadeIn(400);
         });
     },
-    cargarPrimerEntrenamiento: function (idEquipo) {
-        var entrenamientos = new Asistente.entrenamientos();
-        var template = this.templateEntrenamientos;
-        var $el = this.$el;
-        var data = {
-            'id_equipo': idEquipo
-        };
-        entrenamientos.fetch({
-            data: JSON.stringify(data),
-            success: function (collection, response, options) {
-                var coleccionParseada = collection.toJSON();
-                coleccionParseada.equipoId = idEquipo;
-                $el.find('#tabs-content-container').fadeOut(400, function () {
-                    $(this).html(template({
-                        entrenamientos: coleccionParseada
-                    })).fadeIn(400);
-                });
-
-                ;
-            },
-            error: function (collection, xhr, options) {
-                console.log("Error: ", xhr);
-            }
-        });
-    },
-    cargarEntrenamientos: function (e) {
-
-    },
     cargarPruebas: function (e) {
         e.preventDefault();
-        var idEquipo = parseInt($(e.target).parent().parent().parent().parent().parent().parent().attr("id").split("-")[1]);
+        var that = this;
+        var idEquipo = parseInt($(e.target).parents('.tab-pane').attr("id").split("-")[1]);
         var fechaOriginal = $(e.target).text().split("-");
         var fechaParseada = fechaOriginal[2] + "-" + fechaOriginal[1] + "-" + fechaOriginal[0];
         var template = this.templatePruebas;
-        var $el = $(e.target).parent().parent().parent().parent().parent().parent();
-        var pruebas = new Asistente.pruebas();
+        this.$currentEl = $(e.target).parents('.tab-pane');
         var data = {
             'id_equipo': idEquipo,
             'fecha': fechaParseada
         };
-        pruebas.fetch({
+        this.pruebas.fetch({
             data: JSON.stringify(data),
             success: function (collection, response, options) {
-                $el.find('.pruebas').fadeOut(400, function () {
+            	that.$currentEl.find('.pruebas').fadeOut(400, function () {
                     $(this).html(template({
                         pruebas: collection.toJSON()
                     }));
@@ -137,6 +113,7 @@ window.Asistente.vistaPrincipal = Backbone.View.extend({
         var template = this.templateEquipos;
         var $el = this.$el;
         var primerEquipo;
+        
         var data = {
             'id_usuario': idUsuario
         };

@@ -17,6 +17,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.annotations.common.util.impl.LoggerFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -78,6 +79,7 @@ public class EntrenamientoDaoImpl implements EntrenamientoDao{
         }
         Criteria c = s.createCriteria(Entrenamiento.class);
         c.add(Restrictions.eq("id_equipo",idEquipo));
+        c.addOrder(Order.desc("fecha"));
         resp = c.list();
         return resp;
     }
@@ -96,6 +98,7 @@ public class EntrenamientoDaoImpl implements EntrenamientoDao{
         Criteria c = s.createCriteria(Entrenamiento.class);
         c.add(Restrictions.eq("id_equipo", idEquipo));
         c.add(Restrictions.eq("fecha", fecha));
+        c.addOrder(Order.desc("fecha"));
         resp = (Entrenamiento)c.uniqueResult();
         return resp;
     }

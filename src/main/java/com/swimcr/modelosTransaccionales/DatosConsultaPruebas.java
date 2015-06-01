@@ -14,13 +14,13 @@ import java.util.Date;
  */
 public class DatosConsultaPruebas {
     int id_equipo;
-    Date fecha;
+    String fecha;
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 

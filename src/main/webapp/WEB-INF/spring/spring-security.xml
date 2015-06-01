@@ -8,6 +8,7 @@
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<http auto-config="true">
+		<intercept-url pattern="/" access="hasRole('USER')"/>
 		<intercept-url pattern="/admin**" access="hasRole('USER')"/>
 		<intercept-url pattern="/gestion/**" access="hasRole('USER')"/>
 		
