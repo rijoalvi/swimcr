@@ -30,6 +30,7 @@
 		}
     </style>
     <link rel="stylesheet" href="/recursos/interfaz/css/bootstrap-theme.min.css">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.min.css" type="text/css" rel="stylesheet">
     <link rel="stylesheet" href="/recursos/interfaz/css/main.css">
 
     <script src="/recursos/interfaz/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
@@ -177,6 +178,8 @@
     <script src="/recursos/interfaz/js/backbone-app/colecciones/pruebas.js"></script>
     <script src="/recursos/interfaz/js/backbone-app/vistas/vistaPrincipal.js"></script>
     <script src="/recursos/interfaz/js/vendor/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment-with-locales.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.min.js"></script>
 
     <script src="/recursos/interfaz/js/main.js"></script>
 </body>
