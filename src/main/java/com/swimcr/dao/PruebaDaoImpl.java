@@ -15,6 +15,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.annotations.common.util.impl.LoggerFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -73,6 +74,7 @@ public class PruebaDaoImpl implements PruebaDao{
         }
         Criteria c = s.createCriteria(Prueba.class);
         c.add(Restrictions.eq("id_entrenamiento", idEntrenamiento));
+        c.addOrder(Order.asc("consecutivo")); 
         List<Prueba> resp = c.list();
         s.close();
         return resp;

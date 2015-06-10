@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@page session="true"%>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -84,7 +85,8 @@
                 	</c:if>
                 	<div class = "tab-pane ${entrenamientoActivo} " id="tab-${arregloEntrenamientos[0].id_equipo}">
 			            <div class = "entrenamientos">
-			                <table class="table">
+			            	<div class="calendar"></div>
+<!--  		                <table class="table">
 			                    <tr>
 			                        <th>
 			                            Entrenamientos <button style="color:#078C19; opacity: 2;" type="button" class="close boton-agregar-entrenamiento">+</button>
@@ -99,6 +101,7 @@
 			                    </tr>
 			                    </c:forEach>
 			                </table>
+-->			                
 			            </div>
 			            <div class = "pruebas">
 			                <!--Contenido del template de pruebas-->
@@ -166,6 +169,7 @@
     <script>
         window.jQuery || document.write('<script src="js/vendor/jquery-1.11.0.min.js"><\/script>')
     </script>
+    <script src="/recursos/interfaz/js/foreachPolyfill.js"></script>
     <script src="/recursos/interfaz/js/vendor/underscore-min.js"></script>
     <script src="/recursos/interfaz/js/vendor/backbone-min.js"></script>
     <script src="/recursos/interfaz/js/backbone-app/modelos/equipo.js"></script>
@@ -180,8 +184,38 @@
     <script src="/recursos/interfaz/js/vendor/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment-with-locales.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.min.js"></script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/lang/es.js'></script>
 
     <script src="/recursos/interfaz/js/main.js"></script>
+    
+    <script type='text/javascript'>  
+	  var date = new Date();
+	  var d = date.getDate();
+	  var m = date.getMonth();
+	  var y = date.getFullYear();
+	  var Swimcr = Swimcr || {};
+	  Swimcr.listaEntrenamientos = [
+		      <c:forEach items="${entrenamientos}" var="arregloEntrenamientos" varStatus="contadorEntrenamientos">
+		      {
+		      	'idEquipo': '${arregloEntrenamientos[0].id_equipo}',
+		       	'entrenamientos': [
+		      		<c:forEach items="${arregloEntrenamientos}" var="entrenamiento" varStatus="contadorArreglo">
+		      		{
+		       		'id': '${entrenamiento.id}',
+		       		'fecha': '${entrenamiento.fecha}'
+		       	}
+		      		<c:if test="${not contadorArreglo.last}">
+		      			,
+	      			</c:if>
+		       	</c:forEach>
+		       		]
+		      }
+		      <c:if test="${not contadorEntrenamientos.last}">
+    			,
+			  </c:if>
+		     	</c:forEach>
+		      ];
+    </script>
 </body>
 
 </html>
