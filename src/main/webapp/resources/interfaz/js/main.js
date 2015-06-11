@@ -46,15 +46,14 @@ $(document).ready(
 									},
 									editable : true,
 									events : eventosCalendario,
-									eventClick : function(calEvent, jsEvent,
-											view) {
-										console.log(calEvent);
+									eventClick : function(calEvent, jsEvent, view) {
+										$(this).trigger('eventselected', [calEvent.start.day(), (calEvent.start.month() + 1), calEvent.start.year()]);
 										//alert('Event: ' + calEvent.title);
 										//alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
 										//alert('View: ' + view.name);
 
 										// change the border color just for fun
-										//$(this).css('border-color', 'red');
+										$(this).css('border-color', 'red');
 
 									},
 									dayClick : function(date, jsEvent, view) {

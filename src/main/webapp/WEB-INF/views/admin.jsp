@@ -184,7 +184,7 @@
     <script src="/recursos/interfaz/js/vendor/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment-with-locales.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.min.js"></script>
-    <script src='//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/lang/es.js'></script>
+    <script src='recursos/interfaz/js/vendor/es.js'></script>
 
     <script src="/recursos/interfaz/js/main.js"></script>
     

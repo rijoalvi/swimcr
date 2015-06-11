@@ -12,15 +12,15 @@ window.Asistente = window.Asistente || {};
 window.Asistente.vistaPrincipal = Backbone.View.extend({
     el: "#contenedor-aplicacion",
     events: {
-        "click .nav-tabs a": "mostrarEntrenamientos",
-        "click .entrenamientos a": "cargarPruebas",
-        "click #boton-volver-entrenamientos": "mostrarEntrenamientos",
-        "click .entrenamientos .boton-borrar-entrenamiento": "borrarFilaEntrenamientos",
-        "click .pruebas .boton-borrar-prueba": "borrarFilaPruebas",
+        "click .nav-tabs a"									: "mostrarEntrenamientos",
+        "eventselected .entrenamientos a"					: "cargarPruebas",
+        "click #boton-volver-entrenamientos"				: "mostrarEntrenamientos",
+        "click .entrenamientos .boton-borrar-entrenamiento"	: "borrarFilaEntrenamientos",
+        "click .pruebas .boton-borrar-prueba"				: "borrarFilaPruebas",
         "click .entrenamientos .boton-agregar-entrenamiento": "agregarFilaEntrenamientos",
-        "click .pruebas .boton-agregar-prueba": "agregarFilaPruebas",
+        "click .pruebas .boton-agregar-prueba"				: "agregarFilaPruebas",
         "click .entrenamientos .boton-guardar-entrenamiento": "guardarFilaEntrenamientos",
-        "click .pruebas .boton-guardar-prueba": "guardarFilaPruebas"
+        "click .pruebas .boton-guardar-prueba"				: "guardarFilaPruebas"
     },
     initialize: function () {
     	this.templatePruebas = _.template($("#templatePruebas").html());
@@ -76,12 +76,12 @@ window.Asistente.vistaPrincipal = Backbone.View.extend({
             $('.active .entrenamientos').fadeIn(400);
         });
     },
-    cargarPruebas: function (e) {
+    cargarPruebas: function (e, dia, mes, ano) {
         e.preventDefault();
         var that = this;
         var idEquipo = parseInt($(e.target).parents('.tab-pane').attr("id").split("-")[1]);
-        var fechaOriginal = $(e.target).text().split("-");
-        var fechaParseada = fechaOriginal[2] + "-" + fechaOriginal[1] + "-" + fechaOriginal[0];
+        //var fechaOriginal = $(e.target).text().split("-");
+        var fechaParseada = dia + "-" + mes + "-" + ano;
         var template = this.templatePruebas;
         this.$currentEl = $(e.target).parents('.tab-pane');
         var data = {
