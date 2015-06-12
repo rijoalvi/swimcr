@@ -36,53 +36,38 @@ $(document).ready(
 						allDay : false
 					});
 				});
-				$('#tab-' + arregloEntrenamientos.idEquipo + ' .calendar')
-						.fullCalendar(
-								{
-									header : {
-										left : 'prev,next today',
-										center : 'title',
-										right : 'month,agendaWeek,agendaDay'
-									},
-									editable : true,
-									events : eventosCalendario,
-									eventClick : function(calEvent, jsEvent, view) {
-										$(this).trigger('eventselected', [calEvent.start.day(), (calEvent.start.month() + 1), calEvent.start.year()]);
-										//alert('Event: ' + calEvent.title);
-										//alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-										//alert('View: ' + view.name);
+				$('#tab-' + arregloEntrenamientos.idEquipo + ' .calendar').fullCalendar({
+					header : {
+						left : 'prev,next',
+						center : 'title',
+						right : 'today, month,agendaWeek,agendaDay'
+					},
+					editable : true,
+					events : eventosCalendario,
+					eventClick : function(calEvent, jsEvent, view) {
+						$(this).trigger('eventselected', [calEvent.start.day(), (calEvent.start.month() + 1), calEvent.start.year()]);
+						//alert('Event: ' + calEvent.title);
+						//alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+						//alert('View: ' + view.name);
 
-										// change the border color just for fun
-										$(this).css('border-color', 'red');
+						// change the border color just for fun
+						$(this).css('border-color', 'red');
 
-									},
-									dayClick : function(date, jsEvent, view) {
-
-										alert('Clicked on: ' + date.format());
-
-										alert('Coordinates: ' + jsEvent.pageX
-												+ ',' + jsEvent.pageY);
-
-										alert('Current view: ' + view.name);
-
-										// change the day's background color
-										// just for fun
-										$(this).css('background-color', 'red');
-
-									},
-									buttonText : {
-										prev : "anterior",
-										next : "siguiente",
-										prevYear : "año anterior",
-										nextYear : "siguiente año",
-										year : 'año', // TODO: locale files
-										// need to
-										// specify this
-										today : 'hoy',
-										month : 'mes',
-										week : 'semana',
-										day : 'dia'
-									}
-								});
+					},
+					buttonText : {
+						prev : "anterior",
+						next : "siguiente",
+						prevYear : "año anterior",
+						nextYear : "siguiente año",
+						year : 'año', // TODO: locale files
+						// need to
+						// specify this
+						today : 'hoy',
+						month : 'mes',
+						week : 'semana',
+						day : 'dia'
+					}
+				});
 			});
+			$('.fc-left').append('<button type="button" class="nuevo-entrenamiento fc-button fc-state-default fc-corner-left fc-corner-right">Nuevo Entrenamiento</button>');
 		});

@@ -15,23 +15,10 @@
     <title></title>
     <meta name="Asistente de Nataci&oacute;n" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <link rel="stylesheet" href="/recursos/interfaz/css/bootstrap.min.css">
-    <style>
-        body {
-            padding-top: 50px;
-            padding-bottom: 20px;
-        }
-        .navbar-center{
-		    position: absolute;
-		    width: 100%;
-		    left: 0;
-		    text-align: center;
-		    margin: auto;
-		}
-    </style>
     <link rel="stylesheet" href="/recursos/interfaz/css/bootstrap-theme.min.css">
-    <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.min.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.14.30/css/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="/recursos/interfaz/css/main.css">
 
     <script src="/recursos/interfaz/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
@@ -85,7 +72,7 @@
                 	</c:if>
                 	<div class = "tab-pane ${entrenamientoActivo} " id="tab-${arregloEntrenamientos[0].id_equipo}">
 			            <div class = "entrenamientos">
-			            	<div class="calendar"></div>
+			            	<div class="calendar">TEST</div>
 <!--  		                <table class="table">
 			                    <tr>
 			                        <th>
@@ -113,6 +100,22 @@
 
             <p><a class="btn btn-primary btn-lg hidden" id="boton-volver-entrenamientos" role="button">&laquo; Volver a la lista de entrenamientos</a>
             </p>
+        </div>
+        <div class="modal-calendario" id="modal-agregar-entrenamiento">
+        	<div class="modal-background"></div>
+		       	<form  class="modal-content" role="form">
+		       		<h2>Nuevo Entrenamiento</h2>
+		       		<div class="form-group">
+						<label for="email">Fecha y hora:</label>
+						<div class='input-group date datetimepicker'>
+							<input type='text' class="form-control" />
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-default">Guardar</button>
+				</form>
         </div>
     </div>
 
@@ -184,6 +187,7 @@
     <script src="/recursos/interfaz/js/vendor/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment-with-locales.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.14.30/js/bootstrap-datetimepicker.min.js"></script>
     <script src='recursos/interfaz/js/vendor/es.js'></script>
 
     <script src="/recursos/interfaz/js/main.js"></script>

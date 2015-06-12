@@ -3,6 +3,17 @@
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+body {
+	padding-top: 50px;
+	padding-bottom: 20px;
+}
+.navbar-center{
+	position: absolute;
+	width: 100%;
+	left: 0;
+	text-align: center;
+	margin: auto;
+}
 
 .hidden {
     display: none;
@@ -25,11 +36,25 @@
 	margin-top: 20px;
 }
 
+#modal-agregar-entrenamiento {
+	display: none;
+}
 
+.modal-background {
+	background: rgba(0, 0, 0, 0.6);
+	top: 0;
+	left: 0;
+	height: 100%;
+	position: fixed;
+	width: 100%;
+	z-index: 3;
+}
 
-
-
-
-
-
-
+.modal-content {
+	position: fixed;
+	top: 150px;
+	left:400px;
+	width:500px;
+	height: 400px;
+	z-index: 4;
+}

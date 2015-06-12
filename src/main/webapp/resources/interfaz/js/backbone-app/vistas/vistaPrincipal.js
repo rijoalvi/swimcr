@@ -17,7 +17,8 @@ window.Asistente.vistaPrincipal = Backbone.View.extend({
         "click #boton-volver-entrenamientos"				: "mostrarEntrenamientos",
         "click .entrenamientos .boton-borrar-entrenamiento"	: "borrarFilaEntrenamientos",
         "click .pruebas .boton-borrar-prueba"				: "borrarFilaPruebas",
-        "click .entrenamientos .boton-agregar-entrenamiento": "agregarFilaEntrenamientos",
+        "click .nuevo-entrenamiento"						: "abrirModalEntrenamiento",
+        "click .modal-background"							: "cerrarModalEntrenamiento",
         "click .pruebas .boton-agregar-prueba"				: "agregarFilaPruebas",
         "click .entrenamientos .boton-guardar-entrenamiento": "guardarFilaEntrenamientos",
         "click .pruebas .boton-guardar-prueba"				: "guardarFilaPruebas"
@@ -50,14 +51,25 @@ window.Asistente.vistaPrincipal = Backbone.View.extend({
         e.preventDefault();
         $(e.target).parent().parent().parent().remove();
     },
-    agregarFilaEntrenamientos: function (e) {
+    abrirModalEntrenamiento: function (e) {
         e.preventDefault();
+        this.$el.find('#modal-agregar-entrenamiento').show();
+        this.$el.find('#modal-agregar-entrenamiento .datetimepicker').datetimepicker({
+            locale: 'es'
+        });
+       /* 
         var nuevaFila = $(e.target).parent().parent().parent().find('tr:last').clone();
         nuevaFila.find('.fechaEntrenamiento').html('<input type="text" class="entrenamientoSinGuardar" placeholder="Fecha" ><button style="color:#C00; opacity: 2;" type="button" class="close boton-borrar-entrenamiento">&times;</button>');
         nuevaFila.find('.boton-borrar-entrenamiento').addClass('boton-guardar-entrenamiento').removeClass('boton-borrar-entrenamiento');
         nuevaFila.find('.boton-guardar-entrenamiento').css({'color':'#0000FF'});
         nuevaFila.find('.boton-guardar-entrenamiento').text("\u2713");
         $(e.target).parent().parent().parent().append(nuevaFila);
+        */
+    },
+    cerrarModalEntrenamiento: function (e) {
+        e.preventDefault();
+        this.$el.find('#modal-agregar-entrenamiento').hide();
+        this.$el.find('#modal-agregar-entrenamiento .datetimepicker').data("DateTimePicker").destroy();
     },
     agregarFilaPruebas: function (e) {
         e.preventDefault();
