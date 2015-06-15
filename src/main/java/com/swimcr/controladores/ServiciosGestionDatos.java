@@ -6,6 +6,7 @@
 
 package com.swimcr.controladores;
 
+import com.swimcr.customPojo.EntrenamientoPojo;
 import com.swimcr.modelos.Entrenamiento;
 import com.swimcr.modelos.Equipo;
 import com.swimcr.modelos.Usuario;
@@ -14,10 +15,16 @@ import com.swimcr.modelos.Prueba;
 import com.swimcr.servicios.AdministradorPruebas;
 import com.swimcr.servicios.AdministradorUsuarios;
 import com.swimcr.servicios.AdministradorEntrenamientos;
+
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,18 +60,31 @@ public class ServiciosGestionDatos {
     @Autowired
     private AdministradorEntrenamientos administradorEntrenamientos;
     
+    private Entrenamiento entrenamiento;
+    
     /************************Seccion de gestion de entrenamiento*********************************/
     @RequestMapping(value = "/entrenamiento",
                     method = RequestMethod.POST,
                     headers = "Accept=application/json",
                     produces = "application/json",
                     consumes = "application/json")
-    public ResponseEntity gestionEntrenamiento(HttpServletRequest request, @RequestBody Entrenamiento entrenamiento) {
+    public ResponseEntity gestionEntrenamiento(HttpServletRequest request, @RequestBody EntrenamientoPojo entrenamientoPojo) {
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
         headers.add("Access-Control-Allow-Origin", "*");
         MultiValueMap<String, String> result = new LinkedMultiValueMap<String, String>();
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd,HH:mm");
+        Date fecha;
+        try {
+        	fecha = formatter.parse(entrenamientoPojo.getFecha());
+        } catch (Exception entrenamientoException) {
+        	fecha = new Date();
+        }
+        entrenamiento = new Entrenamiento();
+        entrenamiento.setFecha(fecha);
+        entrenamiento.setId_equipo(entrenamientoPojo.getId_equipo());
+        entrenamiento.setId(entrenamientoPojo.getId());
         administradorEntrenamientos.guardarEntrenamiento(entrenamiento);
-	System.out.println("Intento de guardar prueba");
+System.out.println("Intento de guardar prueba");
         result.add("fecha", entrenamiento.getFecha().toString());
 
         return new ResponseEntity(result, headers, HttpStatus.OK);

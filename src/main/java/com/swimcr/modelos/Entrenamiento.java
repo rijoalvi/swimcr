@@ -1,6 +1,5 @@
 package com.swimcr.modelos;
 
-import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,8 +20,12 @@ public class Entrenamiento {
     private int id;
     private int id_equipo;
     private Date fecha;
+    
+    public Entrenamiento() {
+		
+	}
 
-    @Id
+	@Id
     @GeneratedValue
     @Column(name = "id")
     public int getId() {

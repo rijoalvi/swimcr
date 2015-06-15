@@ -38,6 +38,11 @@ body {
 
 #modal-agregar-entrenamiento {
 	display: none;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
 }
 
 .modal-background {
@@ -47,14 +52,48 @@ body {
 	height: 100%;
 	position: fixed;
 	width: 100%;
-	z-index: 3;
+	z-index: 1031;
+}
+.relative-container {
+	position: relative;
+	height: 100%;
+	width: 100%;
 }
 
 .modal-content {
-	position: fixed;
-	top: 150px;
-	left:400px;
-	width:500px;
-	height: 400px;
-	z-index: 4;
+	width: 320px;
+	margin: 20% auto;
+	z-index: 1032;
+}
+
+#modal-agregar-entrenamiento h2 {
+	font-size: 18px;
+	width: 318px;
+	margin: 0 auto;
+	background-color: #33CCFF;
+	text-align: center;
+	margin-bottom: 10px;
+	border-radius: 5px 5px 0 0;
+	padding: 5px 0;
+}
+
+
+#modal-agregar-entrenamiento .form-group {
+	width: 180px;
+	margin: 0 auto;
+}
+
+#modal-agregar-entrenamiento .datetimepicker {
+	margin-bottom: 10px;
+}
+
+#modal-agregar-entrenamiento .btn {
+	margin-bottom: 20px;
+}
+
+.error {
+	font-size: 10px;
+	font-weight: bold;
+	color: red;
+	display: none;
 }

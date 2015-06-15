@@ -72,7 +72,7 @@
                 	</c:if>
                 	<div class = "tab-pane ${entrenamientoActivo} " id="tab-${arregloEntrenamientos[0].id_equipo}">
 			            <div class = "entrenamientos">
-			            	<div class="calendar">TEST</div>
+			            	<div class="calendar"></div>
 <!--  		                <table class="table">
 			                    <tr>
 			                        <th>
@@ -102,20 +102,25 @@
             </p>
         </div>
         <div class="modal-calendario" id="modal-agregar-entrenamiento">
-        	<div class="modal-background"></div>
-		       	<form  class="modal-content" role="form">
+        	<div class="relative-container">
+	        	<div class="modal-background"></div>
+		       	<form  class="form-guardar-entrenamiento  modal-content" role="form">
 		       		<h2>Nuevo Entrenamiento</h2>
 		       		<div class="form-group">
-						<label for="email">Fecha y hora:</label>
+		       			<label for="datetime-field">Fecha y hora:</label>
 						<div class='input-group date datetimepicker'>
-							<input type='text' class="form-control" />
+							<input type='text' class="datetime form-control" id="datetime-field" name="datetime-field"/>
 							<span class="input-group-addon">
 								<span class="glyphicon glyphicon-calendar"></span>
 							</span>
 						</div>
 					</div>
-					<button type="submit" class="btn btn-default">Guardar</button>
+					<div class="form-group">
+						<p class="error">Ocurri&oacute; un error al guardar el entrenamiento.</p>
+						<button type="submit" class="btn btn-default">Guardar</button>
+					</div>
 				</form>
+			</div>
         </div>
     </div>
 
