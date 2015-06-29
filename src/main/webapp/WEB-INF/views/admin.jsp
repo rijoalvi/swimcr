@@ -198,10 +198,6 @@
     <script src="/recursos/interfaz/js/main.js"></script>
     
     <script type='text/javascript'>  
-	  var date = new Date();
-	  var d = date.getDate();
-	  var m = date.getMonth();
-	  var y = date.getFullYear();
 	  var Swimcr = Swimcr || {};
 	  Swimcr.listaEntrenamientos = [
 		      <c:forEach items="${entrenamientos}" var="arregloEntrenamientos" varStatus="contadorEntrenamientos">

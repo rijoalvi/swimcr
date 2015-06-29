@@ -97,3 +97,16 @@ body {
 	color: red;
 	display: none;
 }
+
+.pruebas .encabezado-entrenamiento h3 {
+	float: left;
+	display: inline-block;
+}
+
+.pruebas .encabezado-entrenamiento .datos-entrenamiento {
+	float: left;
+	width: 350px;
+	margin-top: 16px;
+	margin-bottom: 14px;
+	margin-left: 10px;
+}

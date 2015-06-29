@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @Service("administradorPruebas")
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
+
 public class AdministradorPruebasImpl implements AdministradorPruebas{
 
     @Autowired

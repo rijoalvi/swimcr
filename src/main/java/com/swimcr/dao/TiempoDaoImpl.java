@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Joseiby Hernandez
  */
 @Repository("tiempoDao")
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 public class TiempoDaoImpl implements TiempoDao{
     
     private final static Logger LOGGER = Logger.getLogger(TiempoDaoImpl.class.getName());
@@ -34,30 +35,34 @@ public class TiempoDaoImpl implements TiempoDao{
     @Override
     public void guardarTiempo(Tiempo tiempo) {
     	Session s;
+    	s = sessionfactory.getCurrentSession();
+    	/*
         try {
             s = sessionfactory.getCurrentSession();
         }
         catch(Exception e) {
-            System.out.print(e);
-            s = sessionfactory.openSession();
-        }
+        	System.out.print("Error guardar tiempo "+e);
+            //s = sessionfactory.openSession();
+        }*/
         s.saveOrUpdate(tiempo);
-        s.close();
+        //s.close();
     }
     
         @Override
     public List<Tiempo> obtenerTiempos() {
         @SuppressWarnings("unchecked")
         Session s;
+        s = sessionfactory.getCurrentSession();
+    	/*
         try {
             s = sessionfactory.getCurrentSession();
         }
         catch(Exception e) {
-            System.out.print(e);
-            s = sessionfactory.openSession();
-        }
+        	System.out.print("Error obtener tiempos "+e);
+            //s = sessionfactory.openSession();
+        }*/
         List<Tiempo> lista = s.createCriteria(Tiempo.class).list();
-        s.close();
+        //s.close();
         return lista;
     }
 

@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @Service("administradorUsuarios")
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
+
 public class AdministradorUsuariosImpl implements AdministradorUsuarios{
 
     @Autowired

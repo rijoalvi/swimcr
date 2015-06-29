@@ -45,7 +45,7 @@ $(document).ready(
 					editable : true,
 					events : eventosCalendario,
 					eventClick : function(calEvent, jsEvent, view) {
-						$(this).trigger('eventselected', [calEvent.start.day(), (calEvent.start.month() + 1), calEvent.start.year()]);
+						$(this).trigger('eventselected', [calEvent.start.day(), (calEvent.start.month() + 1), calEvent.start.year(), calEvent.start.hour(), calEvent.start.minutes(), calEvent.id]);
 						//alert('Event: ' + calEvent.title);
 						//alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
 						//alert('View: ' + view.name);

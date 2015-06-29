@@ -26,12 +26,9 @@ window.Asistente.vistaPrincipal = Backbone.View.extend({
     },
     initialize: function () {
     	this.templatePruebas = _.template($("#templatePruebas").html());
-        this.templateEquipos = _.template($("#templateEquipos").html());
-        this.templateEntrenamientos = _.template($("#templateEntrenamientos").html());
     },
     
     render: function () {
-//        this.cargarTabs();
     	this.pruebas = new Asistente.pruebas();
         return this;
     },
@@ -57,8 +54,13 @@ window.Asistente.vistaPrincipal = Backbone.View.extend({
                     allDay: false,
                     title: fecha.hour() + ':' + fecha.minutes()
                 };
+        	if (idEntrenamiento) {
+        		that.$el.find('.tab-pane.active .calendar').fullCalendar('removeEvents', idEntrenamiento);
+        	}
         	that.$el.find('.tab-pane.active .calendar').fullCalendar( 'renderEvent', evento);
-        	that.cerrarModalEntrenamiento();
+        	if (!idEntrenamiento) {
+        		that.cerrarModalEntrenamiento();
+        	}
         }).fail(function() {
         	that.$el.find('#modal-agregar-entrenamiento .error').show();
         });
@@ -86,7 +88,7 @@ window.Asistente.vistaPrincipal = Backbone.View.extend({
             locale: 'es'
         });
         var date = new Date();
-        $modal.find('.datetimepicker').data("DateTimePicker").date(date)
+        $modal.find('.datetimepicker').data("DateTimePicker").date(date);
     },
     cerrarModalEntrenamiento: function (e) {
     	if(e) {
@@ -113,12 +115,13 @@ window.Asistente.vistaPrincipal = Backbone.View.extend({
         $(e.target).parent().parent().parent().append(nuevaFila);
     },
     mostrarEntrenamientos: function () {
+    	this.$el.find('.pruebas .datos-entrenamiento').data("DateTimePicker").destroy();
         $('.active .pruebas').fadeOut(400, function () {
             $('#boton-volver-entrenamientos').addClass('hidden')
             $('.active .entrenamientos').fadeIn(400);
         });
     },
-    cargarPruebas: function (e, dia, mes, ano) {
+    cargarPruebas: function (e, dia, mes, ano, hora, minutos, idEntrenamiento) {
         e.preventDefault();
         var that = this;
         var idEquipo = parseInt($(e.target).parents('.tab-pane').attr("id").split("-")[1]);
@@ -133,41 +136,30 @@ window.Asistente.vistaPrincipal = Backbone.View.extend({
         this.pruebas.fetch({
             data: JSON.stringify(data),
             success: function (collection, response, options) {
+            	if(idEntrenamiento) {
+            		that.idEntrenamiento = idEntrenamiento
+            	}
+            	that.idEquipo = idEquipo;
+            	
+        		var fecha = new Date(ano, (mes-1), dia, hora, minutos);
             	that.$currentEl.find('.pruebas').fadeOut(400, function () {
                     $(this).html(template({
                         pruebas: collection.toJSON()
                     }));
-                    var that = $(this);
+                    $(this).find('.datos-entrenamiento').datetimepicker({locale: 'es'});
+                    $(this).find('.datos-entrenamiento').data("DateTimePicker").date(fecha);
+                    $(this).find('.datos-entrenamiento').on('dp.change', function (e) {
+                        e.preventDefault();
+                        var nuevaFecha = $(e.target).data("DateTimePicker").date()
+                        that.guardarEntrenamiento(nuevaFecha, that.idEntrenamiento);
+                    });
+                    var self = $(this);
+                    
                     $('.active .entrenamientos').fadeOut(400, function () {
-                        that.fadeIn(400);
+                    	self.fadeIn(400);
                         $('#boton-volver-entrenamientos').removeClass('hidden');
                     });
                 });
-            },
-            error: function (collection, xhr, options) {
-                console.log("Error: ", xhr);
-            }
-        });
-    },
-    cargarTabs: function () {
-        var self = this;
-        var equipos = new Asistente.equipos();
-        var template = this.templateEquipos;
-        var $el = this.$el;
-        var primerEquipo;
-        
-        var data = {
-            'id_usuario': idUsuario
-        };
-        equipos.fetch({
-            data: JSON.stringify(data),
-            success: function (collection, response, options) {
-                $el.find('#tabs-container').fadeOut(400, function () {
-                    $(this).html(template({
-                        equipos: collection.toJSON()
-                    })).fadeIn(400);
-                });
-                self.cargarPrimerEntrenamiento(collection.models[0].id);;
             },
             error: function (collection, xhr, options) {
                 console.log("Error: ", xhr);

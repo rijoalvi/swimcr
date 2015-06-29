@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Joseiby Hernandez
  */
 @Repository("pruebaDao")
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 public class PruebaDaoImpl implements PruebaDao{
     
     private final static Logger LOGGER = Logger.getLogger(PruebaDaoImpl.class.getName());
@@ -37,13 +38,15 @@ public class PruebaDaoImpl implements PruebaDao{
     @Override
     public void guardarPrueba(Prueba prueba) {
     	Session s;
+    	s = sessionfactory.getCurrentSession();
+    	/*
         try {
             s = sessionfactory.getCurrentSession();
         }
         catch(Exception e) {
-            System.out.print(e);
-            s = sessionfactory.openSession();
-        }
+        	System.out.print("Error guardar prueba "+e);
+            //s = sessionfactory.openSession();
+        }*/
         s.saveOrUpdate(prueba);
     }
     
@@ -51,13 +54,15 @@ public class PruebaDaoImpl implements PruebaDao{
     public List<Prueba> obtenerPruebas() {
         @SuppressWarnings("unchecked")
         Session s;
+        s = sessionfactory.getCurrentSession();
+    	/*
         try {
             s = sessionfactory.getCurrentSession();
         }
         catch(Exception e) {
-            System.out.print(e);
-            s = sessionfactory.openSession();
-        }
+        	System.out.print("Error obtener pruebas "+e);
+            //s = sessionfactory.openSession();
+        }*/
         List<Prueba> lista = s.createCriteria(Prueba.class).list();
         return lista;
     }
@@ -65,18 +70,20 @@ public class PruebaDaoImpl implements PruebaDao{
     @Override
     public List<Prueba> obtenerPruebas(int idEntrenamiento) {
         Session s;
+        s = sessionfactory.getCurrentSession();
+    	/*
         try {
             s = sessionfactory.getCurrentSession();
         }
         catch(Exception e) {
-            System.out.print(e);
-            s = sessionfactory.openSession();
-        }
+        	System.out.print("Error obtener pruebas id "+e);
+            //s = sessionfactory.openSession();
+        }*/
         Criteria c = s.createCriteria(Prueba.class);
         c.add(Restrictions.eq("id_entrenamiento", idEntrenamiento));
         c.addOrder(Order.asc("consecutivo")); 
         List<Prueba> resp = c.list();
-        s.close();
+        //s.close();
         return resp;
     }
 

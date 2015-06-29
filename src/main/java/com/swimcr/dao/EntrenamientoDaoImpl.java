@@ -29,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Joseiby Hernandez
  */
 @Repository("entrenamientoDao")
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 public class EntrenamientoDaoImpl implements EntrenamientoDao{
     
     private final static Logger LOGGER = Logger.getLogger(EntrenamientoDaoImpl.class.getName());
@@ -39,30 +40,34 @@ public class EntrenamientoDaoImpl implements EntrenamientoDao{
     @Override
     public void guardarEntrenamiento(Entrenamiento entrenamiento) {
     	Session s;
+    	s = sessionfactory.getCurrentSession();
+    	/*
         try {
             s = sessionfactory.getCurrentSession();
         }
         catch(Exception e) {
-            System.out.print(e);
-            s = sessionfactory.openSession();
-        }
+            System.out.print("Error guardar entrenamiento "+e);
+            //s = sessionfactory.openSession();
+        }*/
         s.saveOrUpdate(entrenamiento);
-        s.close();
+        //s.close();
     }
     
     @Override
     public List<Entrenamiento> obtenerEntrenamientos() {
         @SuppressWarnings("unchecked")
         Session s;
+        s = sessionfactory.getCurrentSession();
+    	/*
         try {
             s = sessionfactory.getCurrentSession();
         }
         catch(Exception e) {
-            System.out.print(e);
-            s = sessionfactory.openSession();
-        }
+        	System.out.print("Error obtener entrenamiento "+e);
+            //s = sessionfactory.openSession();
+        }*/
         List<Entrenamiento> listaEntrenamientos = s.createCriteria(Entrenamiento.class).list();
-        s.close();
+        //s.close();
         return listaEntrenamientos;
     }
     
@@ -70,13 +75,15 @@ public class EntrenamientoDaoImpl implements EntrenamientoDao{
     public List<Entrenamiento> obtenerEntrenamientos(int idEquipo) {
         List<Entrenamiento> resp;
         Session s;
+        s = sessionfactory.getCurrentSession();
+    	/*
         try {
             s = sessionfactory.getCurrentSession();
         }
         catch(Exception e) {
-            System.out.print(e);
-            s = sessionfactory.openSession();
-        }
+        	System.out.print("Error obtener entrenamientos "+e);
+        	//s = sessionfactory.openSession();
+        }*/
         Criteria c = s.createCriteria(Entrenamiento.class);
         c.add(Restrictions.eq("id_equipo",idEquipo));
         c.addOrder(Order.desc("fecha"));
@@ -88,13 +95,15 @@ public class EntrenamientoDaoImpl implements EntrenamientoDao{
     public Entrenamiento obtenerEntrenamientoFecha(int idEquipo, Date fecha) {
         Entrenamiento resp;
         Session s;
+        s = sessionfactory.getCurrentSession();
+    	/*
         try {
             s = sessionfactory.getCurrentSession();
         }
         catch(Exception e) {
-            System.out.print(e);
-            s = sessionfactory.openSession();
-        }
+        	System.out.print("Error obtener entrenamientos fecha "+e);
+        	//s = sessionfactory.openSession();
+        }*/
         Criteria c = s.createCriteria(Entrenamiento.class);
         c.add(Restrictions.eq("id_equipo", idEquipo));
         c.add(Restrictions.eq("fecha", fecha));

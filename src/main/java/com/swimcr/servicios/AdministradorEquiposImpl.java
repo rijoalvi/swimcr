@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @Service 
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
+
 public class AdministradorEquiposImpl implements AdministradorEquipos{
 
     @Autowired

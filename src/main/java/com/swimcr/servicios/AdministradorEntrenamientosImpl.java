@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @Service("administradorEntrenamientos")
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
+
 public class AdministradorEntrenamientosImpl implements AdministradorEntrenamientos{
 
     @Autowired

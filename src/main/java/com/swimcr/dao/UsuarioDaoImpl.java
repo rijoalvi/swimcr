@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author r.alvarado
  */
 @Repository("usuarioDao")
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 public class UsuarioDaoImpl implements UsuarioDao {
     
     private final static Logger LOGGER = Logger.getLogger(UsuarioDaoImpl.class.getName());
@@ -37,13 +38,15 @@ public class UsuarioDaoImpl implements UsuarioDao {
     @SuppressWarnings("unchecked")
 	public Usuario obtenerPorNombreUsuario(String nombreUsuario) { 
 		Session s;
+		s = sessionfactory.getCurrentSession();
+    	/*
         try {
             s = sessionfactory.getCurrentSession();
         }
         catch(Exception e) {
-            System.out.print(e);
-            s = sessionfactory.openSession();
-        }
+        	System.out.print("Error obtener por usuario "+e);
+            //s = sessionfactory.openSession();
+        }*/
         Criteria c = s.createCriteria(Usuario.class);
 		c.add(Restrictions.eq("nombre_usuario", nombreUsuario));
 		
@@ -60,43 +63,49 @@ public class UsuarioDaoImpl implements UsuarioDao {
     @Override
     public void guardarUsuario(Usuario usuario) {
     	Session s;
+    	s = sessionfactory.getCurrentSession();
+    	/*
         try {
             s = sessionfactory.getCurrentSession();
         }
         catch(Exception e) {
-            System.out.print(e);
-            s = sessionfactory.openSession();
-        }
+        	System.out.print("Error guardar usuario "+e);
+            //s = sessionfactory.openSession();
+        }*/
         s.saveOrUpdate(usuario);
-        s.close();
+        //s.close();
     }
 
     @Override
     public List<Usuario> obtenerUsuarios() {
         @SuppressWarnings("unchecked")
         Session s;
+        s = sessionfactory.getCurrentSession();
+    	/*
         try {
             s = sessionfactory.getCurrentSession();
         }
         catch(Exception e) {
-            System.out.print(e);
-            s = sessionfactory.openSession();
-        }
+        	System.out.print("Error obtener usuarios "+e);
+            //s = sessionfactory.openSession();
+        }*/
         List<Usuario> listaUsuarios = s.createCriteria(Usuario.class).list();
-        s.close();
+        //s.close();
         return listaUsuarios;
     }
     
     @Override
     public Usuario obtenerUsuarioLogin(String usuario, String contrasena) {
     	Session s;
+    	s = sessionfactory.getCurrentSession();
+    	/*
         try {
             s = sessionfactory.getCurrentSession();
         }
         catch(Exception e) {
-            System.out.print(e);
-            s = sessionfactory.openSession();
-        }
+        	System.out.print("Error obtener usuario login "+e);
+            //s = sessionfactory.openSession();
+        }*/
         Criteria c = s.createCriteria(Usuario.class);
         if(usuario!=null){
 		c.add(Restrictions.eq("nombre_usuario",usuario));
@@ -105,7 +114,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
 		c.add(Restrictions.eq("contrasena",contrasena));
 	}
         Usuario usuarioResp = (Usuario) c.uniqueResult();
-        s.close();
+        //s.close();
         return usuarioResp;
     }
 }
