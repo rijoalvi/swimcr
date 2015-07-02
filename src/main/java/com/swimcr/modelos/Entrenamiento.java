@@ -1,11 +1,15 @@
 package com.swimcr.modelos;
 
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import org.hibernate.annotations.Type;
 
 /**
@@ -38,7 +42,6 @@ public class Entrenamiento {
     }
 
     @Column(name = "fecha")
-    @Type(type="date")
     public Date getFecha() {
         return fecha;
     }
@@ -56,7 +59,6 @@ public class Entrenamiento {
     }
 
     @Column(name = "fecha")
-    @Type(type="date")
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }

@@ -27,14 +27,19 @@ $(document).ready(
 				var eventosCalendario = [];
 				arregloEntrenamientos.entrenamientos.forEach(function(
 						entrenamiento) {
-					var dateElements = entrenamiento.fecha.split('-');
-					eventosCalendario.push({
-						id : entrenamiento.id,
-						title : entrenamiento.fecha,
-						start : new Date(dateElements[0], (dateElements[1] - 1),
-								dateElements[2]),
-						allDay : false
-					});
+					var splittedDate = entrenamiento.fecha.split(' ');
+					if(splittedDate.length > 1) {
+						var date = splittedDate[0].split('-')
+						var hours = splittedDate[1].split(':')
+						var dateElements = date.concat(hours);
+						eventosCalendario.push({
+							id : entrenamiento.id,
+							title : entrenamiento.fecha,
+							start : new Date(dateElements[0], (dateElements[1] - 1),
+									dateElements[2], dateElements[3], dateElements[4]),
+							allDay : false
+						});
+					}
 				});
 				$('#tab-' + arregloEntrenamientos.idEquipo + ' .calendar').fullCalendar({
 					header : {
@@ -45,7 +50,7 @@ $(document).ready(
 					editable : true,
 					events : eventosCalendario,
 					eventClick : function(calEvent, jsEvent, view) {
-						$(this).trigger('eventselected', [calEvent.start.day(), (calEvent.start.month() + 1), calEvent.start.year(), calEvent.start.hour(), calEvent.start.minutes(), calEvent.id]);
+						$(this).trigger('eventselected', [calEvent.start.date(), (calEvent.start.month() + 1), calEvent.start.year(), calEvent.start.hour(), calEvent.start.minutes(), calEvent.id]);
 						//alert('Event: ' + calEvent.title);
 						//alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
 						//alert('View: ' + view.name);

@@ -50,6 +50,7 @@ window.Asistente.vistaPrincipal = Backbone.View.extend({
             dataType: 'json'
         }).done(function(data) {
         	var evento = {
+        			id: parseInt(data.id[0]),
                     start: new Date(fecha.year(), fecha.month(), fecha.date(), fecha.hour(), fecha.minutes()),
                     allDay: false,
                     title: fecha.hour() + ':' + fecha.minutes()
@@ -126,7 +127,7 @@ window.Asistente.vistaPrincipal = Backbone.View.extend({
         var that = this;
         var idEquipo = parseInt($(e.target).parents('.tab-pane').attr("id").split("-")[1]);
         //var fechaOriginal = $(e.target).text().split("-");
-        var fechaParseada = dia + "-" + mes + "-" + ano;
+        var fechaParseada = dia + '-' + mes + '-' + ano + ',' + hora + ':' + minutos;
         var template = this.templatePruebas;
         this.$currentEl = $(e.target).parents('.tab-pane');
         var data = {

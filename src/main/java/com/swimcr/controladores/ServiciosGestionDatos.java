@@ -84,8 +84,11 @@ public class ServiciosGestionDatos {
         entrenamiento.setId_equipo(entrenamientoPojo.getId_equipo());
         entrenamiento.setId(entrenamientoPojo.getId());
         administradorEntrenamientos.guardarEntrenamiento(entrenamiento);
+        
 System.out.println("Intento de guardar prueba");
-        result.add("fecha", entrenamiento.getFecha().toString());
+        result.add("fecha", formatter.format(entrenamiento.getFecha()));
+        result.add("id_equipo", String.valueOf(entrenamiento.getId_equipo()));
+        result.add("id", String.valueOf(entrenamiento.getId()));
 
         return new ResponseEntity(result, headers, HttpStatus.OK);
     }

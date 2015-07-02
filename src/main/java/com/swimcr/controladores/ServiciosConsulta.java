@@ -175,7 +175,7 @@ public class ServiciosConsulta {
         return modelAndView;
     }
     
-    /************************Seccion de consulta de Entrenamiento por idEntrenamiento****************************/
+    /************************Seccion de consulta de Entrenamientos por idEntrenamiento****************************/
     @RequestMapping(value = "/entrenamiento",
                     method = RequestMethod.POST,
                     headers = "Accept=application/json",
