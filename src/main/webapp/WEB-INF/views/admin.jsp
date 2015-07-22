@@ -70,7 +70,7 @@
 	                <c:if test="${contadorEntrenamientos.index > 0}">
 	                	<c:set var="entrenamientoActivo" value=""/>
                 	</c:if>
-                	<div class = "tab-pane ${entrenamientoActivo} " id="tab-${arregloEntrenamientos[0].id_equipo}">
+                	<div class = "tab-pane ${entrenamientoActivo} " id="tab-${equipos[contadorEntrenamientos.index].id}">
 			            <div class = "entrenamientos">
 			            	<div class="calendar"></div>
 <!--  		                <table class="table">
@@ -202,7 +202,7 @@
 	  Swimcr.listaEntrenamientos = [
 		      <c:forEach items="${entrenamientos}" var="arregloEntrenamientos" varStatus="contadorEntrenamientos">
 		      {
-		      	'idEquipo': '${arregloEntrenamientos[0].id_equipo}',
+		      	'idEquipo': '${equipos[contadorEntrenamientos.index].id}',
 		       	'entrenamientos': [
 		      		<c:forEach items="${arregloEntrenamientos}" var="entrenamiento" varStatus="contadorArreglo">
 		      		{

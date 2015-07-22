@@ -6,7 +6,6 @@
 
 package com.swimcr.modelos;
 
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,7 +26,7 @@ public class Tiempo {
     private int id;
     private int id_prueba;
     private int id_usuario;
-    private Date tiempo;
+    private String tiempo;
     private int distancia_prueba;
     private int estilo_prueba;
 
@@ -47,7 +46,7 @@ public class Tiempo {
     }
     
     @Column(name = "tiempo")
-    public Date getTiempo() {
+    public String getTiempo() {
         return tiempo;
     }
     
@@ -77,7 +76,7 @@ public class Tiempo {
     }
 
     @Column(name = "tiempo")
-    public void setTiempo(Date tiempo) {
+    public void setTiempo(String tiempo) {
         this.tiempo = tiempo;
     }
 

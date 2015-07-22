@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost:3306
--- Generation Time: May 28, 2015 at 04:36 PM
+-- Generation Time: Jul 22, 2015 at 04:52 PM
 -- Server version: 5.5.38
 -- PHP Version: 5.6.2
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `asistente_natacion_cr`
 --
-CREATE DATABASE IF NOT EXISTS `asistente_natacion_cr` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `asistente_natacion_cr`;
 
 -- --------------------------------------------------------
 
@@ -28,12 +26,37 @@ USE `asistente_natacion_cr`;
 -- Table structure for table `entrenamiento`
 --
 
-DROP TABLE IF EXISTS `entrenamiento`;
 CREATE TABLE `entrenamiento` (
 `id` int(11) NOT NULL,
   `id_equipo` int(11) NOT NULL,
-  `fecha` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `fecha` datetime NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `entrenamiento`
+--
+
+INSERT INTO `entrenamiento` (`id`, `id_equipo`, `fecha`) VALUES
+(1, 1, '2015-06-29 00:00:00'),
+(2, 1, '2015-06-02 00:00:00'),
+(3, 1, '2015-06-29 00:00:00'),
+(4, 1, '2015-06-04 00:00:00'),
+(5, 1, '2015-06-05 00:00:00'),
+(6, 1, '2015-06-01 00:00:00'),
+(7, 1, '2015-06-06 00:00:00'),
+(8, 1, '2015-06-04 00:00:00'),
+(9, 1, '2015-06-07 00:00:00'),
+(10, 1, '2015-07-03 00:00:00'),
+(11, 1, '2015-06-30 00:00:00'),
+(12, 1, '2015-07-05 00:00:00'),
+(13, 1, '2015-07-07 18:44:00'),
+(14, 1, '2015-07-08 04:45:00'),
+(15, 1, '2015-07-08 16:51:00'),
+(16, 1, '2015-07-10 09:52:00'),
+(17, 1, '2015-07-12 11:53:00'),
+(23, 1, '2015-07-02 01:05:00'),
+(24, 1, '2015-07-13 00:45:00'),
+(25, 2, '2015-07-02 10:45:00');
 
 -- --------------------------------------------------------
 
@@ -41,7 +64,6 @@ CREATE TABLE `entrenamiento` (
 -- Table structure for table `equipo`
 --
 
-DROP TABLE IF EXISTS `equipo`;
 CREATE TABLE `equipo` (
 `id` int(11) NOT NULL,
   `nombre` varchar(45) NOT NULL,
@@ -62,7 +84,6 @@ INSERT INTO `equipo` (`id`, `nombre`, `id_usuario`) VALUES
 -- Table structure for table `prueba`
 --
 
-DROP TABLE IF EXISTS `prueba`;
 CREATE TABLE `prueba` (
 `id` int(11) NOT NULL,
   `id_entrenamiento` int(11) NOT NULL,
@@ -70,7 +91,16 @@ CREATE TABLE `prueba` (
   `estilo` int(11) NOT NULL,
   `consecutivo` int(11) NOT NULL,
   `tipo` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `prueba`
+--
+
+INSERT INTO `prueba` (`id`, `id_entrenamiento`, `distancia`, `estilo`, `consecutivo`, `tipo`) VALUES
+(1, 23, 400, 2, 1, 'Calentamiento'),
+(2, 23, 200, 1, 1, 'Patada'),
+(3, 23, 800, 4, 1, 'Afloje');
 
 -- --------------------------------------------------------
 
@@ -78,7 +108,6 @@ CREATE TABLE `prueba` (
 -- Table structure for table `rol`
 --
 
-DROP TABLE IF EXISTS `rol`;
 CREATE TABLE `rol` (
 `id_rol_usuario` int(11) NOT NULL,
   `nombre_usuario` varchar(45) NOT NULL,
@@ -100,12 +129,11 @@ INSERT INTO `rol` (`id_rol_usuario`, `nombre_usuario`, `rol`) VALUES
 -- Table structure for table `tiempo`
 --
 
-DROP TABLE IF EXISTS `tiempo`;
 CREATE TABLE `tiempo` (
 `id` int(11) NOT NULL,
   `id_prueba` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
-  `tiempo` datetime NOT NULL,
+  `tiempo` varchar(10) NOT NULL,
   `distancia_prueba` int(11) DEFAULT NULL,
   `estilo_prueba` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -116,7 +144,6 @@ CREATE TABLE `tiempo` (
 -- Table structure for table `usuario`
 --
 
-DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE `usuario` (
   `nombre_usuario` varchar(45) NOT NULL,
   `contrasena` varchar(150) NOT NULL,
@@ -187,7 +214,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT for table `entrenamiento`
 --
 ALTER TABLE `entrenamiento`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT for table `equipo`
 --
@@ -197,7 +224,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 -- AUTO_INCREMENT for table `prueba`
 --
 ALTER TABLE `prueba`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `rol`
 --
