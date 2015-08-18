@@ -66,7 +66,9 @@ public class EntrenamientoDaoImpl implements EntrenamientoDao{
         	System.out.print("Error obtener entrenamiento "+e);
             //s = sessionfactory.openSession();
         }*/
-        List<Entrenamiento> listaEntrenamientos = s.createCriteria(Entrenamiento.class).list();
+        Criteria c = s.createCriteria(Entrenamiento.class);
+        c.addOrder(Order.asc("fecha"));
+        List<Entrenamiento> listaEntrenamientos = c.list();
         //s.close();
         return listaEntrenamientos;
     }
@@ -86,7 +88,7 @@ public class EntrenamientoDaoImpl implements EntrenamientoDao{
         }*/
         Criteria c = s.createCriteria(Entrenamiento.class);
         c.add(Restrictions.eq("id_equipo",idEquipo));
-        c.addOrder(Order.desc("fecha"));
+        c.addOrder(Order.asc("fecha"));
         resp = c.list();
         return resp;
     }
@@ -107,7 +109,7 @@ public class EntrenamientoDaoImpl implements EntrenamientoDao{
         Criteria c = s.createCriteria(Entrenamiento.class);
         c.add(Restrictions.eq("id_equipo", idEquipo));
         c.add(Restrictions.eq("fecha", fecha));
-        c.addOrder(Order.desc("fecha"));
+        c.addOrder(Order.asc("fecha"));
         resp = (Entrenamiento)c.uniqueResult();
         return resp;
     }

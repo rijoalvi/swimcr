@@ -22,19 +22,27 @@ $(document).ready(
 				window.vistaPrincipal = new window.Asistente.vistaPrincipal()
 						.render();
 			}, "html");
-			var entrenamientosEquipo = [];
+			var entrenamientosEquipo = [],
+				dayCounter = 1,
+				currentDay; 
 			Swimcr.listaEntrenamientos.forEach(function(arregloEntrenamientos) {
 				var eventosCalendario = [];
 				arregloEntrenamientos.entrenamientos.forEach(function(
 						entrenamiento) {
 					var splittedDate = entrenamiento.fecha.split(' ');
 					if(splittedDate.length > 1) {
+						if (currentDay === splittedDate[0]) {
+							dayCounter++;
+						} else {
+							currentDay = splittedDate[0];
+							dayCounter = 1;
+						}
 						var date = splittedDate[0].split('-')
 						var hours = splittedDate[1].split(':')
 						var dateElements = date.concat(hours);
 						eventosCalendario.push({
 							id : entrenamiento.id,
-							title : entrenamiento.fecha,
+							title : 'Entrenamiento ' + dayCounter,
 							start : new Date(dateElements[0], (dateElements[1] - 1),
 									dateElements[2], dateElements[3], dateElements[4]),
 							allDay : false
@@ -59,6 +67,7 @@ $(document).ready(
 						$(this).css('border-color', 'red');
 
 					},
+					timeFormat: 'h(:mm)t',
 					buttonText : {
 						prev : "anterior",
 						next : "siguiente",

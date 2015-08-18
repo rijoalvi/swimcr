@@ -40,11 +40,22 @@ Asistente.vistaPrincipal = Backbone.View.extend({
             data: JSON.stringify(data),
             dataType: 'json'
         }).done(function(data) {
+            var manana = (parseInt(fecha.date()) + 1).toString();
+            var eventosDelDia = that.$el.find('.tab-pane.active .calendar').fullCalendar( 'clientEvents', 
+                function(event) {
+                    if(event.start.isBetween(new Date(fecha.year(), fecha.month(), fecha.date()),
+                        new Date(fecha.year(), fecha.month(), manana))) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
+            var numEventosDia = eventosDelDia.length ? eventosDelDia.length + 1 : 1;
         	var evento = {
         			id: parseInt(data.id[0]),
                     start: new Date(fecha.year(), fecha.month(), fecha.date(), fecha.hour(), fecha.minutes()),
                     allDay: false,
-                    title: fecha.hour() + ':' + fecha.minutes()
+                    title: 'Entrenamiento' + numEventosDia
                 };
         	if (idEntrenamiento) {
         		that.$el.find('.tab-pane.active .calendar').fullCalendar('removeEvents', idEntrenamiento);
@@ -117,12 +128,15 @@ Asistente.vistaPrincipal = Backbone.View.extend({
         $(e.target).parent().parent().parent().append(nuevaFila);
     },
     mostrarEntrenamientos: function () {
-    	if(this.$el.find('.pruebas .datos-entrenamiento').length) {
-    		this.$el.find('.pruebas .datos-entrenamiento').data("DateTimePicker").destroy();
+        var that = this;
+    	if(that.$el.find('.pruebas .datos-entrenamiento').length) {
+    		that.$el.find('.pruebas .datos-entrenamiento').data("DateTimePicker").destroy();
     	}
     	$('.active .pruebas').fadeOut(400, function () {
-            $('#boton-volver-entrenamientos').addClass('hidden')
-            $('.active .entrenamientos').fadeIn(400);
+            that.$el.find('#boton-volver-entrenamientos').addClass('hidden')
+            that.$el.find('.active .entrenamientos').fadeIn(400);
+            that.$el.find('.tab-pane.active .calendar').fullCalendar('rerenderEvents');
+undefined
         });
     },
     cargarPruebas: function (e, dia, mes, ano, hora, minutos, idEntrenamiento) {
