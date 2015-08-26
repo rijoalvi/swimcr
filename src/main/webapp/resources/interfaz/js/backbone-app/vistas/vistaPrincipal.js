@@ -2,17 +2,20 @@ var Asistente = Asistente || {};
 Asistente.vistaPrincipal = Backbone.View.extend({
     el: "#contenedor-aplicacion",
     events: {
-        "click .nav-tabs a"									: "mostrarEntrenamientos",
-        "eventselected .entrenamientos a"					: "cargarPruebas",
-        "click #boton-volver-entrenamientos"				: "mostrarEntrenamientos",
-        "click .entrenamientos .boton-borrar-entrenamiento"	: "borrarEntrenamiento",
-        "click .pruebas .boton-borrar-prueba"				: "borrarPrueba",
-        "click .nuevo-entrenamiento"						: "abrirModalEntrenamiento",
-        "click .modal-background"							: "cerrarModalEntrenamiento",
-        "click .form-guardar-entrenamiento .cerrar"			: "cerrarModalEntrenamiento",
-        "click .pruebas .boton-agregar-prueba"				: "agregarFilaPruebas",
-        "submit .form-guardar-entrenamiento"				: "cerrarModalEntrenamiento",
-        "click .pruebas .boton-guardar-prueba"				: "guardarPrueba"
+        "click  .nav-tabs a"                                    : "mostrarEntrenamientos",
+        "eventselected .entrenamientos a"                       : "cargarPruebas",
+        "click  #boton-volver-entrenamientos"			        : "mostrarEntrenamientos",
+        "click  .entrenamientos .boton-borrar-entrenamiento"	: "borrarEntrenamiento",
+        "click  .pruebas .boton-borrar-prueba"                  : "borrarPrueba",
+        "click  .nuevo-entrenamiento"                           : "abrirModalEntrenamiento",
+        "click  .modal-background"                              : "cerrarModalEntrenamiento",
+        "click  .form-guardar-entrenamiento .cerrar"            : "cerrarModalEntrenamiento",
+        "click  .pruebas .boton-agregar-prueba"                 : "agregarFilaPruebas",
+        "submit .form-guardar-entrenamiento"                    : "cerrarModalEntrenamiento",
+        "click  .pruebas .boton-guardar-prueba"                 : "guardarPrueba",
+        "change .pruebas select"                                : "actualizarPrueba",
+        "blur .pruebas .tipoPrueba"                             : "actualizarPrueba",
+        "focus .pruebas .tipoPrueba"                            : "cachearValorPrueba"
     },
     initialize: function () {
     	this.templatePruebas = _.template($("#templatePruebas").html());
@@ -78,8 +81,48 @@ Asistente.vistaPrincipal = Backbone.View.extend({
             'consecutivo': dataContainer.index(),
             'tipo': dataContainer.find('.tipoPrueba').val()
         };
-        console.log(data);
+        $.ajax({
+            type: 'POST',
+            url: '/pruebas',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            dataType: 'json'
+        }).done(function(returnData) {
+            //console.log(returnData);
+        }).fail(function() {
+            //that.$el.find('#modal-agregar-entrenamiento .error').show();
+        });
         $(e.target).parent().html('<button style="color:#C00; opacity: 2;" type="button" class="close boton-borrar-prueba">&times;</button>');
+    },
+    cachearValorPrueba: function (e) {
+        e.preventDefault();
+        this.currentInputValue = $(e.target).val();
+    },
+    actualizarPrueba: function (e) {
+        e.preventDefault();
+        if(this.currentInputValue !== $(e.target).val()) {
+            var dataContainer = $(e.target).parents('tr');
+            var data = {
+                'id_entrenamiento': this.idEntrenamiento,
+                'distancia': parseInt(dataContainer.find('.distancia').val()),
+                'estilo': parseInt(dataContainer.find('.estilo').val()),
+                'consecutivo': dataContainer.index(),
+                'tipo': dataContainer.find('.tipoPrueba').val(),
+                'id': dataContainer.data('id')
+            };
+            $.ajax({
+                type: 'POST',
+                url: '/pruebas',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                dataType: 'json'
+            }).done(function(returnData) {
+                this.currentInputValue = undefined;
+            }).fail(function() {
+                //that.$el.find('#modal-agregar-entrenamiento .error').show();
+            });
+        }
+        
     },
     borrarEntrenamiento: function(e) {
         e.preventDefault();
@@ -144,7 +187,7 @@ undefined
         var that = this;
         var idEquipo = parseInt($(e.target).parents('.tab-pane').attr("id").split("-")[1]);
         //var fechaOriginal = $(e.target).text().split("-");
-        var fechaParseada = dia + '-' + mes + '-' + ano + ',' + hora + ':' + minutos;
+        var fechaParseada = dia + '-' + mes + '-' + ano + '_' + hora + '-' + minutos;
         var template = this.templatePruebas;
         this.$currentEl = $(e.target).parents('.tab-pane');
         this.pruebas.setParams(idEquipo, fechaParseada);

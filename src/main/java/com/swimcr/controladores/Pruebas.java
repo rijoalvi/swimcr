@@ -54,7 +54,7 @@ public class Pruebas {
 		MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
 		headers.add("Access-Control-Allow-Origin", "*");
 		ObjectMapper mapper = new ObjectMapper();
-		DateFormat format = new SimpleDateFormat("dd-MM-yyyy,hh:mm",
+		DateFormat format = new SimpleDateFormat("dd-MM-yyyy_hh-mm",
 				Locale.ENGLISH);
 		Date fecha = null;
 		try {
